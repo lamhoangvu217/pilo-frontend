@@ -5,6 +5,8 @@ import { KeyIcon, UserCircleIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "redux/reducers/auth/userSlice";
 import useUserDetail from "hooks/useUserDetail";
+
+import jwt_decode from "jwt-decode";
 function ProfileModal() {
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.user.current);
@@ -13,6 +15,15 @@ function ProfileModal() {
     const action = logout();
     dispatch(action);
   };
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      if (decodedToken.exp < Date.now() / 1000) {
+        handleLogoutClick();
+      }
+    }
+  });
   const { user, loading } = useUserDetail(userId);
   if (loading) {
     return "";

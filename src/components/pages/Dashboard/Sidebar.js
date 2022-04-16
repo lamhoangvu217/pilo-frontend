@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import React, { Fragment } from "react";
+import { Dialog, Transition } from "@headlessui/react";
 import { HomeIcon, XIcon, DocumentReportIcon } from "@heroicons/react/outline";
 import MainBoxProject from "./MainBoxProject";
 function Sidebar({ sidebarOpen, classNames, setSidebarOpen }) {

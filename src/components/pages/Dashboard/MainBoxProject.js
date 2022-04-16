@@ -1,26 +1,25 @@
 import projectApi from "api/projectApi";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Skeleton from "react-loading-skeleton";
+// import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 function MainBoxProject() {
   const [projectList, setProjectList] = useState([]);
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     (async () => {
       try {
         const { projects } = await projectApi.getAll();
-        setProjectList(projects.data);
-        console.log(projects.data);
+        const results = projects.data.filter((project) => {
+          return project !== null;
+        });
+        setProjectList(results);
+        console.log(projectList);
       } catch (error) {
         console.log("Faild to fetch project list");
       }
-      // setLoading(false)
     })();
   }, []);
-  // const searchProject = () => {
-
-  // }
+  if (projectList == null) return "";
   return (
     <div className="w-full">
       {/* <input
@@ -49,7 +48,7 @@ function MainBoxProject() {
               </span>
             </div>
           </Link>
-        )) || <Skeleton />}
+        ))}
       </div>
     </div>
   );

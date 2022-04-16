@@ -1,9 +1,8 @@
-import { Fragment, useState } from "react";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { useState } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import MainDashboard from "./MainDashboard";
-import { useNavigate, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useUserDetail from "hooks/useUserDetail";
 const userNavigation = [
@@ -22,6 +21,7 @@ export default function Dashboard() {
   const isLoggedIn = !!loggedInUser.id;
   const userId = loggedInUser.id;
   const { user, loading } = useUserDetail(userId);
+
   if (!isLoggedIn) {
     return <Navigate to="/" replace />;
   } else {

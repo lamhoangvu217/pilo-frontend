@@ -1,5 +1,28 @@
 import React, { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+const animatedComponents = makeAnimated();
+const member = [
+  {
+    id: 1,
+    name: "Nguyen thanh long",
+    avatar: "/images/img_avatar.png",
+    email: "thanhlong@congty.vn",
+  },
+  {
+    id: 2,
+    name: "Vu Hoang lam",
+    avatar: "/images/img_avatar.png",
+    email: "thanhlong@congty.vn",
+  },
+  {
+    id: 3,
+    name: "Nguyen dinh thi",
+    avatar: "/images/img_avatar.png",
+    email: "thanhlong@congty.vn",
+  },
+];
 function AddMemModal() {
   return (
     <div className="min-h-screen px-4  text-center">
@@ -28,7 +51,7 @@ function AddMemModal() {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <div className="inline-block border-2 border-gray-300 w-full h-full max-w-xl overflow-hidden text-left align-middle transition-all transform bg-[#2c3e50] shadow-xl rounded-md">
+        <div className="inline-block fixed border-2 border-gray-300 w-full h-full max-w-xl overflow-hidden text-left align-middle transition-all transform bg-[#2c3e50] shadow-xl rounded-md">
           <div className="px-[30px] py-[25px]">
             <h1 className="text-xl text-white font-bold">
               Thêm thành viên vào dự án
@@ -41,11 +64,19 @@ function AddMemModal() {
                   Tìm kiếm thành viên nội bộ
                 </span>
               </label>
-              <input
+              {/* <input
                 placeholder="nhập tên hoặc email"
                 className="input  bg-white text-black border-gray-300 border-2"
                 type="text"
+              /> */}
+              <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                defaultValue={[member[0], member[1]]}
+                isMulti
+                options={member}
               />
+              <button className="btn mt-5">Them</button>
             </div>
           </div>
         </div>

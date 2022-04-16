@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import LandingPage from "components/pages/LandingPage";
 import Register from "components/pages/Register";
 import Login from "components/pages/Login";

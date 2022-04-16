@@ -1,7 +1,6 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import ThanhVien from "./ThanhVien";
-import Timeline from "./Timeline";
 import projectApi from "api/projectApi";
 import toast, { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -16,16 +15,18 @@ const schema = yup.object().shape({
   end_date: yup.date().required("Vui lòng nhập ngày kết thúc"),
   thumbnail: yup.string().required("Vui lòng nhập link ảnh thumbnail"),
 });
+
 function AddDuAnModal() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isSubmitting },
-  } = useForm({ resolver: yupResolver(schema) });
+    formState: { isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const onProjectSubmit = async (values) => {
     try {
       const projectData = await projectApi.create(values);
-      console.log(projectData);
       toast.success("Tạo dự án thành công!", {
         duration: 2000,
         position: "top-right",
@@ -82,7 +83,6 @@ function AddDuAnModal() {
                   {...register("name")}
                 />
               </div>
-              {/* <Timeline /> */}
 
               <div className="date-range mt-3 flex flex-row justify-between">
                 <div>
@@ -91,12 +91,13 @@ function AddDuAnModal() {
                   </span>
                   <input
                     className="input font-medium bg-white  text-black rounded-lg py-4 border-2 border-gray-300"
+                    type="date"
                     {...register("start_date")}
                     placeholder="Ngày bắt đầu"
                   />
                 </div>
-
                 <ArrowNarrowRightIcon className="w-8 h-8 text-gray-300 mt-10" />
+
                 <div>
                   <span className="label-text text-black font-semibold block mb-2 mt-1">
                     Ngày kết thúc
@@ -105,12 +106,12 @@ function AddDuAnModal() {
                     className={
                       "input font-medium bg-white  text-black rounded-lg py-4 border-2 border-gray-300"
                     }
+                    type="date"
                     {...register("end_date")}
                     placeholder="Ngày kết thúc"
                   />
                 </div>
               </div>
-
               <div className="form-control mt-4">
                 <label className="label">
                   <span className="label-text text-black text-md font-bold">
@@ -144,7 +145,7 @@ function AddDuAnModal() {
               <button
                 disabled={isSubmitting}
                 type="submit"
-                class="btn btn-primary mt-5 w-full mb-1"
+                className="btn btn-primary mt-5 w-full mb-1"
               >
                 Thêm
               </button>

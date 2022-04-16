@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Menu, Transition, Dialog, Listbox } from "@headlessui/react";
+import React, { Fragment } from "react";
+import { Transition, Listbox } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 function SelectDuAnForm({ setSelected, selected, people }) {
   return (

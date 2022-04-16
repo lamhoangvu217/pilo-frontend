@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -28,7 +28,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting },
   } = useForm({ resolver: yupResolver(schema) });
 
   function sleep(ms) {
@@ -42,7 +42,6 @@ const Login = () => {
       const user = unwrapResult(resultAction);
       toast.success("Đăng nhập thành công. Bạn vui lòng đợi trong giây lát!", {
         position: "top-right",
-        // className: "bg-green-500 text-white",
         icon: "👏",
       });
 
@@ -52,8 +51,6 @@ const Login = () => {
     } catch (error) {
       toast.error("Đăng nhập thất bại, tài khoản không tồn tại!", {
         position: "top-right",
-        // icon: "👏",
-        // className: "bg-red-500 text-white",
       });
     }
   };

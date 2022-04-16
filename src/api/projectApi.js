@@ -28,6 +28,14 @@ const projectApi = {
       },
     });
   },
+  remove(id) {
+    const url = `/api/projects/${id}`;
+    return axiosClient.delete(url, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+  },
 };
 
 export default projectApi;

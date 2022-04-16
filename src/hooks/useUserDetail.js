@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import userApi from "api/userApi";
 export default function useUserDetail(userId) {
   const [user, setUser] = useState({});

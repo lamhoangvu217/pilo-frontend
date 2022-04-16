@@ -2,7 +2,6 @@ import React, { Fragment, useState } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import ProgressBar from "@ramonak/react-progress-bar";
 import {
-  CheckIcon,
   ChevronDownIcon,
   XIcon,
   InformationCircleIcon,
@@ -46,7 +45,7 @@ function CongViecDetailModal({ closeTaskDetailModal }) {
             <div className="flex items-center justify-between">
               <div
                 className={
-                  percent == 100
+                  percent === 100
                     ? "bg-[#2ecc71] flex items-center rounded-md text-white"
                     : "bg-white flex items-center border rounded-md text-black border-black"
                 }

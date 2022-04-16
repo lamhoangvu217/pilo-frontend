@@ -1,5 +1,6 @@
 import React from "react";
 import AddGroupCongViec from "../GroupCongViecModule/AddGroupCongViec";
+import ViewProjectDetail from "../ProjectDetail/ViewProjectDetail";
 import FilterDoneStatus from "./FilterDoneStatus";
 import FilterGroupCongViec from "./FilterGroupCongViec";
 
@@ -9,10 +10,11 @@ function FilterModule() {
       <div className="flex flex-row py-3 px-5 items-center justify-start">
         <FilterGroupCongViec />
         <FilterDoneStatus />
-        
       </div>
-
-      <AddGroupCongViec />
+      <div className="flex flex-row  items-center justify-start">
+        <AddGroupCongViec />
+        <ViewProjectDetail />
+      </div>
     </div>
   );
 }

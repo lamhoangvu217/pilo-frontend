@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Menu, Transition, Dialog, Listbox } from "@headlessui/react";
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
+import { Transition, Dialog } from "@headlessui/react";
 import SelectDuAnForm from "./SelectDuAnForm";
 import SelectNhomCongViecForm from "./SelectNhomCongViecForm";
 import Checklist from "./Checklist";
@@ -18,7 +17,7 @@ const people = [
 
 function AddCongViecModal() {
   const [selected, setSelected] = useState(people[0]);
-  
+
   return (
     <div className="min-h-screen px-4  text-center">
       <Transition.Child

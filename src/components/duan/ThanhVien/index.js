@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { TrashIcon } from "@heroicons/react/solid";
 import AddMemModal from "./AddMemModal";
+
 const member = [
   {
     id: 1,
