@@ -37,6 +37,14 @@ function MainDashboard(props) {
           </button>
         </div>
       </div>
+      <div className="fixed bg-[#192a56] px-12 py-10 rounded-xl top-20  right-8 flex flex-col">
+        <span className="text-white font-medium w-64  mb-3">
+          Bạn còn 5 công việc chưa hoàn thành ở dự án 1
+        </span>
+        <button className="btn bg-red-500 border-none hover:bg-red-600 text-white">
+          Giải quyết ngay
+        </button>
+      </div>
     </main>
   );
 }

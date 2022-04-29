@@ -3,6 +3,7 @@ import LandingHeader from "./LandingHeader";
 import LandingHero from "./LandingHero";
 import LandingProduct from "./LandingProduct";
 import { useNavigate } from "react-router-dom";
+import MetaTitle from "utils/MetaTitle";
 function LandingPage() {
   const checkUserHistory = useNavigate();
   useEffect(() => {
@@ -12,11 +13,14 @@ function LandingPage() {
   }, []);
 
   return (
-    <div>
-      <LandingHeader />
-      <LandingHero />
-      <LandingProduct />
-    </div>
+    <>
+      <MetaTitle title="Pilo - Quản lý công việc" />
+      <div>
+        <LandingHeader />
+        <LandingHero />
+        <LandingProduct />
+      </div>
+    </>
   );
 }
 

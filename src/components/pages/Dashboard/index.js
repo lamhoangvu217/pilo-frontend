@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import MainDashboard from "./MainDashboard";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useUserDetail from "hooks/useUserDetail";
+import MetaTitle from "utils/MetaTitle";
 const userNavigation = [
   { name: "Your Profile", href: "#" },
   { name: "Settings", href: "#" },
@@ -21,12 +22,13 @@ export default function Dashboard() {
   const isLoggedIn = !!loggedInUser.id;
   const userId = loggedInUser.id;
   const { user, loading } = useUserDetail(userId);
-
+  // console.log(user.data.username);
   if (!isLoggedIn) {
     return <Navigate to="/" replace />;
   } else {
     return (
       <>
+        <MetaTitle title={`Dashboard - Pilo`} />
         <div className="">
           <Sidebar
             setSidebarOpen={setSidebarOpen}

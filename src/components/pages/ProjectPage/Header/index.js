@@ -1,11 +1,17 @@
 import React from "react";
 import { HomeIcon } from "@heroicons/react/outline";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import MainBoxProject from "../../Dashboard/MainBoxProject";
 import ProfileModal from "../../Dashboard/ProfileModal";
 import Notification from "../../Dashboard/Notification";
 import AddModule from "../../Dashboard/NavbarModule/AddModule";
+import useProjectDetail from "hooks/useProjectDetail";
 function ProjectPageHeader() {
+  const projectId = useParams();
+  const { project, loading } = useProjectDetail(projectId.id);
+  if (loading) {
+    return "";
+  }
   return (
     <div className="sticky  top-0 z-10 w-full flex-shrink-0 flex h-14 bg-white shadow">
       <div className="flex flex-row w-full justify-between items-center">
@@ -22,9 +28,13 @@ function ProjectPageHeader() {
               tabIndex={0}
               className="flex flex-row items-center cursor-pointer pl-6 justify-center"
             >
-              <img src="/images/flag.png" className="w-6 h-6" alt="" />
+              <img
+                src={project.thumbnail}
+                className="w-6 h-6 rounded-full"
+                alt=""
+              />
               <span className="text-black ml-2 font-medium text-sm">
-                Dự án 1
+                {project.name}
               </span>
             </div>
             <div

@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "redux/reducers/auth/userSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import ThreeDotsWave from "components/loading/ThreeDotsWave";
+import MetaTitle from "utils/MetaTitle";
 const schema = yup.object().shape({
   email: yup
     .string()
@@ -55,122 +56,128 @@ const Login = () => {
     }
   };
   return (
-    <div className="h-screen bg-white flex items-start pt-20 justify-center  px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <Toaster
-          toastOptions={{
-            success: {
-              style: {
-                background: "#2ecc71",
-                color: "white",
+    <>
+      <MetaTitle title="Đăng nhập - Pilo" />
+      <div className="h-screen bg-white flex items-start pt-20 justify-center  px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <Toaster
+            toastOptions={{
+              success: {
+                style: {
+                  background: "#2ecc71",
+                  color: "white",
+                },
               },
-            },
-            error: {
-              style: {
-                background: "#e74c3c",
-                color: "white",
+              error: {
+                style: {
+                  background: "#e74c3c",
+                  color: "white",
+                },
               },
-            },
-          }}
-        />
-        <div>
-          <Link to="/">
-            <img
-              className="mx-auto h-12 w-[200px] cursor-pointer"
-              src="/images/landingpage/logo.svg"
-              alt="Workflow"
-            />
-          </Link>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Đăng nhập vào Pilo
-          </h2>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onLoginSubmit)}>
-          <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input
-                type="email"
-                autoComplete="email"
-                {...register("email")}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
+            }}
+          />
+          <div>
+            <Link to="/">
+              <img
+                className="mx-auto h-12 w-[200px] cursor-pointer"
+                src="/images/landingpage/logo.svg"
+                alt="Workflow"
               />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                type="password"
-                {...register("password")}
-                autoComplete="current-password"
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-              />
-            </div>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
-              >
-                Ghi nhớ tôi
-              </label>
-            </div>
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Bạn quên mật khẩu
-              </a>
-            </div>
-          </div>
-          <div className="flex justify-center mx-auto">
-            {isSubmitting && <ThreeDotsWave />}
-          </div>
-          {errors.password && (
-            <div className="flex justify-center mx-auto">
-              <span className="text-base text-red-500 font-semibold">
-                {errors.password.message}
-              </span>
-            </div>
-          )}
-          {errors.email && (
-            <div className="flex justify-center mx-auto">
-              <span className="text-base text-red-500 font-semibold">
-                {errors.email.message}
-              </span>
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="group disabled:opacity-75 disabled:bg-gray-400 relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Đăng nhập
-          </button>
-          <div className="text-center">
-            <span className="text-black">Bạn chưa có tài khoản?</span>
-            <Link to="/register" className="text-red-500 ml-1 font-semibold">
-              Đăng ký
             </Link>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+              Đăng nhập vào Pilo
+            </h2>
           </div>
-        </form>
+          <form
+            className="mt-8 space-y-6"
+            onSubmit={handleSubmit(onLoginSubmit)}
+          >
+            <input type="hidden" name="remember" defaultValue="true" />
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div>
+                <label htmlFor="email-address" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  type="email"
+                  autoComplete="email"
+                  {...register("email")}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Email address"
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="sr-only">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  {...register("password")}
+                  autoComplete="current-password"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Password"
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="remember-me"
+                  name="remember-me"
+                  type="checkbox"
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                />
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-900"
+                >
+                  Ghi nhớ tôi
+                </label>
+              </div>
+              <div className="text-sm">
+                <a
+                  href="#"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  Bạn quên mật khẩu
+                </a>
+              </div>
+            </div>
+            <div className="flex justify-center mx-auto">
+              {isSubmitting && <ThreeDotsWave />}
+            </div>
+            {errors.password && (
+              <div className="flex justify-center mx-auto">
+                <span className="text-base text-red-500 font-semibold">
+                  {errors.password.message}
+                </span>
+              </div>
+            )}
+            {errors.email && (
+              <div className="flex justify-center mx-auto">
+                <span className="text-base text-red-500 font-semibold">
+                  {errors.email.message}
+                </span>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="group disabled:opacity-75 disabled:bg-gray-400 relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Đăng nhập
+            </button>
+            <div className="text-center">
+              <span className="text-black">Bạn chưa có tài khoản?</span>
+              <Link to="/register" className="text-red-500 ml-1 font-semibold">
+                Đăng ký
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Login;

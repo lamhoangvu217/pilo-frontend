@@ -6,8 +6,12 @@ import toast, { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import Moment from "react-moment";
 import ThreeDotsWave from "components/loading/ThreeDotsWave";
 import { ArrowNarrowRightIcon } from "@heroicons/react/solid";
+import useProjectDetail from "hooks/useProjectDetail";
+import { useParams } from "react-router-dom";
+import moment from "moment";
 const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập tên của bạn"),
   description: yup.string().required("Vui lòng nhập chức vụ của bạn"),
@@ -16,7 +20,8 @@ const schema = yup.object().shape({
   thumbnail: yup.string().required("Vui lòng nhập link ảnh thumbnail"),
 });
 
-function AddDuAnModal() {
+function EditDuAnModal() {
+  const projectId = useParams();
   const {
     register,
     handleSubmit,
@@ -24,6 +29,9 @@ function AddDuAnModal() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const { project, loading } = useProjectDetail(projectId.id);
+  const start_date = moment(new Date(project.start_date)).format("YYYY-MM-DD");
+  const end_date = moment(new Date(project.end_date)).format("YYYY-MM-DD");
   const onProjectSubmit = async (values) => {
     try {
       const projectData = await projectApi.create(values);
@@ -37,6 +45,9 @@ function AddDuAnModal() {
       console.log(error);
     }
   };
+  if (loading) {
+    return "";
+  }
   return (
     <div className="min-h-screen px-4 text-center">
       <Toaster />
@@ -68,7 +79,7 @@ function AddDuAnModal() {
         <div className="inline-block w-full h-full max-w-xl overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-md">
           <div className="px-[30px] py-[25px]">
             <form onSubmit={handleSubmit(onProjectSubmit)}>
-              <h1 className="text-xl text-black font-bold">Thêm mới dự án</h1>
+              <h1 className="text-xl text-black font-bold">Sửa dự án</h1>
               <hr className="mt-3 mb-3" />
               <div className="form-control">
                 <label className="label">
@@ -80,6 +91,7 @@ function AddDuAnModal() {
                   placeholder="nhập tên dự án"
                   className="input  bg-white text-black border-gray-300 border-2"
                   type="text"
+                  value={project.name}
                   {...register("name")}
                 />
               </div>
@@ -93,6 +105,7 @@ function AddDuAnModal() {
                     className="input font-medium bg-white  text-black rounded-lg py-4 border-2 border-gray-300"
                     type="date"
                     {...register("start_date")}
+                    value={start_date}
                     placeholder="Ngày bắt đầu"
                   />
                 </div>
@@ -108,6 +121,7 @@ function AddDuAnModal() {
                     }
                     type="date"
                     {...register("end_date")}
+                    value={end_date}
                     placeholder="Ngày kết thúc"
                   />
                 </div>
@@ -123,6 +137,7 @@ function AddDuAnModal() {
                   placeholder="nhập thông tin bổ sung"
                   defaultValue={""}
                   {...register("description")}
+                  value={project.description}
                 />
               </div>
               <div className="form-control mt-4">
@@ -131,14 +146,20 @@ function AddDuAnModal() {
                     Thumbnail
                   </span>
                 </label>
+                <img
+                  src={`${project.thumbnail}`}
+                  className="w-12 h-12"
+                  alt=""
+                />
                 <input
                   placeholder="nhập link thumbnail"
                   className="input  bg-white text-black border-gray-300 border-2"
                   type="text"
+                  value={project.thumbnail}
                   {...register("thumbnail")}
                 />
               </div>
-              {/* <ThanhVien members={members} /> */}
+              <ThanhVien members={project.members} />
               <div className="flex justify-center mx-auto">
                 {isSubmitting && <ThreeDotsWave />}
               </div>
@@ -147,7 +168,7 @@ function AddDuAnModal() {
                 type="submit"
                 className="btn btn-primary mt-5 w-full mb-1"
               >
-                Thêm
+                Sửa
               </button>
             </form>
           </div>
@@ -157,4 +178,4 @@ function AddDuAnModal() {
   );
 }
 
-export default AddDuAnModal;
+export default EditDuAnModal;

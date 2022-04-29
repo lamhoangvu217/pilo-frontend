@@ -3,39 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { TrashIcon } from "@heroicons/react/solid";
 import AddMemModal from "./AddMemModal";
 
-const member = [
-  {
-    id: 1,
-    name: "Nguyen thanh long",
-    avatar: "/images/img_avatar.png",
-    email: "thanhlong@congty.vn",
-  },
-  {
-    id: 2,
-    name: "Vu Hoang lam",
-    avatar: "/images/img_avatar.png",
-    email: "thanhlong@congty.vn",
-  },
-  {
-    id: 3,
-    name: "Vu Hoang lam",
-    avatar: "/images/img_avatar.png",
-    email: "thanhlong@congty.vn",
-  },
-  {
-    id: 4,
-    name: "Vu Hoang lam",
-    avatar: "/images/img_avatar.png",
-    email: "thanhlong@congty.vn",
-  },
-  {
-    id: 5,
-    name: "Vu Hoang lam",
-    avatar: "/images/img_avatar.png",
-    email: "thanhlong@congty.vn",
-  },
-];
-function ThanhVien() {
+function ThanhVien({ members }) {
   let [deleteOpen, setDeleteOpen] = useState(false);
   function closeDeleteModal() {
     setDeleteOpen(false);
@@ -58,11 +26,12 @@ function ThanhVien() {
         <div className="flex items-center justify-between">
           <label className="label">
             <span className="label-text text-black text-md font-bold">
-              Thành viên ({member.length})
+              Thành viên ({members.length})
             </span>
           </label>
           <div>
             <button
+              type="button"
               onClick={openAddMemModal}
               className="text-[#793EF9] text-sm font-semibold"
             >
@@ -72,18 +41,20 @@ function ThanhVien() {
         </div>
 
         <div className="flex flex-col h-64 overflow-y-auto p-3 w-full border-2 border-gray-300 rounded-md">
-          {member.map((mem) => (
+          {members?.map((mem) => (
             <div
-              key={mem.id}
+              key={mem.user}
               className="flex mt-3   hover:bg-gray-200 hover:rounded-lg px-3 py-2 first:mt-0 flex-row items-center justify-between"
             >
               <div className="flex flex-row items-center">
-                <img src={mem.avatar} className="w-8 h-8 rounded-2xl" alt="" />
+                {/* <img src={mem.avatar} className="w-8 h-8 rounded-2xl" alt="" /> */}
                 <div className="flex flex-col">
                   <span className="text-black font-semibold ml-2 text-sm">
-                    {mem.name}
+                    {mem.email}
                   </span>
-                  <span className="text-black ml-2 text-sm">{mem.email}</span>
+                  <span className="text-black ml-2 text-sm">
+                    Role: {mem.role}
+                  </span>
                 </div>
               </div>
 

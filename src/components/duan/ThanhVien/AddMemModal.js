@@ -1,31 +1,43 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { useParams } from "react-router-dom";
+import useUserList from "hooks/useUserList";
+import projectApi from "api/projectApi";
+import toast, { Toaster } from "react-hot-toast";
+
 const animatedComponents = makeAnimated();
-const member = [
-  {
-    id: 1,
-    name: "Nguyen thanh long",
-    avatar: "/images/img_avatar.png",
-    email: "thanhlong@congty.vn",
-  },
-  {
-    id: 2,
-    name: "Vu Hoang lam",
-    avatar: "/images/img_avatar.png",
-    email: "thanhlong@congty.vn",
-  },
-  {
-    id: 3,
-    name: "Nguyen dinh thi",
-    avatar: "/images/img_avatar.png",
-    email: "thanhlong@congty.vn",
-  },
-];
+
 function AddMemModal() {
+  const { userList, loading } = useUserList();
+  const [memberId, setMemberId] = useState("");
+  const projectId = useParams();
+  const projectIdHandler = projectId.id;
+  const newMembers = userList.map(function (user) {
+    return { value: user.email, label: user.email, id: user.id };
+  });
+  const handleOptionSelect = (values) => {
+    console.log(values[0].id);
+    setMemberId(values[0].id);
+  };
+  const handleAddMember = async () => {
+    try {
+      const memberData = await projectApi.addMember(memberId, projectIdHandler);
+      toast.success("Thêm thành viên thành công!", {
+        duration: 2000,
+        position: "top-right",
+        className: "bg-green-500 text-white",
+        icon: "👏",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="min-h-screen px-4  text-center">
+      <Toaster />
       <Transition.Child
         as={Fragment}
         enter="ease-out duration-300"
@@ -72,11 +84,13 @@ function AddMemModal() {
               <Select
                 closeMenuOnSelect={false}
                 components={animatedComponents}
-                defaultValue={[member[0], member[1]]}
                 isMulti
-                options={member}
+                options={newMembers}
+                onChange={handleOptionSelect}
               />
-              <button className="btn mt-5">Them</button>
+              <button className="btn mt-5" onClick={handleAddMember}>
+                Thêm
+              </button>
             </div>
           </div>
         </div>

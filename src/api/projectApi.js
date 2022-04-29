@@ -36,6 +36,21 @@ const projectApi = {
       },
     });
   },
+  addMember(userId, projectId) {
+    const url = `/api/projects/addMember/${userId}/${projectId}`;
+    return axiosClient.put(
+      url,
+      {
+        userId: userId,
+        projectId: projectId,
+      },
+      {
+        headers: {
+          authorization: `${token}`,
+        },
+      }
+    );
+  },
 };
 
 export default projectApi;

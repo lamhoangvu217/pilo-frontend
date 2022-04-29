@@ -18,6 +18,17 @@ const userApi = {
       },
     });
   },
+  async getAll() {
+    const url = "/api/user";
+    const userList = await axiosClient.get(url, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+    return {
+      users: userList,
+    };
+  },
 };
 
 export default userApi;

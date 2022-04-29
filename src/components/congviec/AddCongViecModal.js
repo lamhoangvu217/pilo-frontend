@@ -6,18 +6,7 @@ import Checklist from "./Checklist";
 import AssignPeople from "./AssignPeople";
 import Deadline from "./Deadline";
 
-const people = [
-  { name: "Wade Cooper" },
-  { name: "Arlene Mccoy" },
-  { name: "Devon Webb" },
-  { name: "Tom Cook" },
-  { name: "Tanya Fox" },
-  { name: "Hellen Schmidt" },
-];
-
 function AddCongViecModal() {
-  const [selected, setSelected] = useState(people[0]);
-
   return (
     <div className="min-h-screen px-4  text-center">
       <Transition.Child
@@ -64,23 +53,16 @@ function AddCongViecModal() {
             </div>
             <div className="grid grid-cols-2 gap-4 mt-7">
               <div>
-                <AssignPeople />
+                <SelectDuAnForm />
               </div>
               <div>
                 <Deadline />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-6 mb-10">
-              <SelectDuAnForm
-                selected={selected}
-                setSelected={setSelected}
-                people={people}
-              />
-              <SelectNhomCongViecForm
-                selected={selected}
-                setSelected={setSelected}
-                people={people}
-              />
+              <AssignPeople />
+
+              <SelectNhomCongViecForm />
             </div>
 
             <div>
