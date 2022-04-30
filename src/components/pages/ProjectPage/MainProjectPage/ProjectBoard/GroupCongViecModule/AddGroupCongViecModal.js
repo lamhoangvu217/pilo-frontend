@@ -1,8 +1,41 @@
-import React, {Fragment} from "react";
+import React, { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
+import listApi from "api/listApi";
+import toast, { Toaster } from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import ThreeDotsWave from "components/loading/ThreeDotsWave";
+import { useParams } from "react-router-dom";
+const schema = yup.object().shape({
+  name: yup.string().required("Vui lòng nhập tên nhóm công việc"),
+});
 function AddGroupCongViecModal() {
+  const projectId = useParams();
+  const projectIdFormat = projectId.id;
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const onListSubmit = async (values) => {
+    try {
+      const listData = await listApi.create(values, projectIdFormat);
+      toast.success("Tạo nhóm công việc thành công!", {
+        duration: 2000,
+        position: "top-right",
+        className: "bg-green-500 text-white",
+        icon: "👏",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="min-h-screen px-4  text-center">
+      <Toaster />
       <Transition.Child
         as={Fragment}
         enter="ease-out duration-300"
@@ -30,23 +63,35 @@ function AddGroupCongViecModal() {
       >
         <div className="inline-block border-2 border-gray-300 w-full h-full max-w-xl overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-md">
           <div className="px-[30px] py-[25px]">
-            <h1 className="text-xl text-black font-bold">Thêm mới nhóm công việc</h1>
+            <h1 className="text-xl text-black font-bold">
+              Thêm mới nhóm công việc
+            </h1>
             <hr className="mt-3 mb-3" />
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-black text-md font-bold">
-                  Tên nhóm công việc
-                </span>
-              </label>
-              <input
-                placeholder="nhập tên nhóm công việc"
-                className="input  bg-white text-black border-gray-300 border-2"
-                type="text"
-              />
-            </div>
-
-            <button class="btn btn-primary mt-5 w-full mb-1">Thêm</button>
+            <form onSubmit={handleSubmit(onListSubmit)}>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-black text-md font-bold">
+                    Tên nhóm công việc
+                  </span>
+                </label>
+                <input
+                  placeholder="nhập tên nhóm công việc"
+                  className="input  bg-white text-black border-gray-300 border-2"
+                  type="text"
+                  {...register("name")}
+                />
+              </div>
+              <div className="flex justify-center mx-auto">
+                {isSubmitting && <ThreeDotsWave />}
+              </div>
+              <button
+                disabled={isSubmitting}
+                type="submit"
+                class="btn btn-primary mt-5 w-full mb-1"
+              >
+                Thêm
+              </button>
+            </form>
           </div>
         </div>
       </Transition.Child>

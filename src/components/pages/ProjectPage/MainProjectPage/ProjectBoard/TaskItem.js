@@ -1,40 +1,43 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CongViecDetailModal from "./CongViecDetail/CongViecDetailModal";
-function TaskItem({ person }) {
+import Moment from "react-moment";
+function TaskItem({ task, loading, index }) {
   let [taskDetailOpen, setTaskDetailOpen] = useState(false);
+
   function openTaskDetailModal() {
     setTaskDetailOpen(true);
-    console.log("pass");
   }
   function closeTaskDetailModal() {
     setTaskDetailOpen(false);
-    
+  }
+  if (loading) {
+    return "";
   }
   return (
     <>
       <tr
-        key={person.stt}
+        key={task.id}
         className="hover:bg-gray-100 cursor-pointer"
         onClick={openTaskDetailModal}
       >
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-          {person.stt}
+          {index}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-          {person.name}
+          {task.name}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          {person.group_task}
+          {/* {person.group_task} */} can thuc hien
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          {person.status_task}
+          {/* {person.status_task} */} chua xong
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          {person.date}
+          <Moment format="DD/MM/YYYY">{task.duedate}</Moment>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          {person.assign}
+          {/* {person.assign} */} chua them nguoi
         </td>
       </tr>
       <Transition appear show={taskDetailOpen} as={Fragment}>
@@ -43,7 +46,10 @@ function TaskItem({ person }) {
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={closeTaskDetailModal}
         >
-          <CongViecDetailModal closeTaskDetailModal={closeTaskDetailModal} />
+          <CongViecDetailModal
+            taskId={task.id}
+            closeTaskDetailModal={closeTaskDetailModal}
+          />
         </Dialog>
       </Transition>
     </>

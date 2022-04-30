@@ -62,45 +62,7 @@ function ProjectDetailModal() {
             </div>
 
             <hr className="mt-3 mb-3" />
-            {/* <div>
-              <div className="flex flex-row">
-                <span className="text-black text-sm">Tên dự án:</span>
-                <span className="text-black text-sm">{project.name}</span>
-              </div>
-              <div>
-                <div>
-                  <span className="text-black text-sm">Ngày bắt đầu:</span>
-                  <span className="text-black text-sm">
-                    <Moment format="DD/MM/YYYY">{project.start_date}</Moment>
-                  </span>
-                </div>
-                <div>
-                  <span className="text-black text-sm">Ngày kết thúc:</span>
-                  <span className="text-black text-sm">
-                    <Moment format="DD/MM/YYYY">{project.end_date}</Moment>
-                  </span>
-                </div>
-              </div>
-              <div>
-                <span className="text-black text-sm">Description:</span>
-                <p className="text-black text-sm">{project.description}</p>
-              </div>
-              <div>
-                <span className="text-black text-sm">Người tạo dự án:</span>
-                {project.members.map((member) => {
-                  if (member.role == "admin") {
-                    return <p className="text-black text-sm">{member.email}</p>;
-                  } else {
-                    return "";
-                  }
-                })}
-              </div>
-              <div>
-                <button className="btn" onClick={openDuAnModal}>
-                  Sửa dự án
-                </button>
-              </div>
-            </div> */}
+
             <div className="mt-8 flex flex-col">
               <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">

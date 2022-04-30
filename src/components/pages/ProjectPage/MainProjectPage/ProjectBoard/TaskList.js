@@ -4,44 +4,16 @@ import AddCongViecModal from "../../../../congviec/AddCongViecModal";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 import FilterModule from "./FilterModule/FilterModule";
 import TaskItem from "./TaskItem";
-
-const people = [
-  {
-    stt: "1",
-    name: "Xử lý frontend cho trang 1",
-    group_task: "Cần thực hiện",
-    status_task: "Chưa hoàn thành",
-    date: "21-12-2022",
-    assign: "Lâm Vũ Hoàng",
-  },
-  {
-    stt: "2",
-    name: "Xử lý frontend cho trang 1",
-    group_task: "Cần thực hiện",
-    status_task: "Chưa hoàn thành",
-    date: "21-12-2022",
-    assign: "Lâm Vũ Hoàng",
-  },
-  {
-    stt: "3",
-    name: "Xử lý frontend cho trang 1",
-    group_task: "Cần thực hiện",
-    status_task: "Chưa hoàn thành",
-    date: "21-12-2022",
-    assign: "Lâm Vũ Hoàng",
-  },
-  {
-    stt: "3",
-    name: "Xử lý frontend cho trang 1",
-    group_task: "Cần thực hiện",
-    status_task: "Chưa hoàn thành",
-    date: "21-12-2022",
-    assign: "Lâm Vũ Hoàng",
-  },
-];
+import useTaskList from "hooks/useTaskList";
+import useLists from "hooks/useLists";
+import { useParams } from "react-router-dom";
 function TaskList() {
   let [addJobOpen, setAddJobOpen] = useState(false);
+  const projectId = useParams();
+  const projectIdFormat = projectId.id;
+  const { list } = useLists(projectIdFormat);
   const [width, height] = useWindowSize();
+  const [listId, setListId] = useState("");
   const projectListHeight = height - 75;
   function closeAddJobModal() {
     setAddJobOpen(false);
@@ -50,17 +22,33 @@ function TaskList() {
   function openAddJobModal() {
     setAddJobOpen(true);
   }
-
-  
+  const handleSelect = (listId) => {
+    setListId(listId);
+  };
+  const index = 0;
+  const { taskList, loading } = useTaskList(listId);
+  if (loading) {
+    return "";
+  }
   return (
     <div className="flex flex-col">
-      <div className="   ">
+      <div className="">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-3">
           <div
             className="shadow overflow-auto border-b border-gray-200 sm:rounded-lg"
             style={{ height: `${projectListHeight}px` }}
           >
             <FilterModule />
+            <div className="flex flex-row py-3 w-full bg-white items-center space-x-2">
+              <span className="text-black block ml-3">Nhóm công việc</span>
+              <div>
+                <select onChange={(e) => handleSelect(e.target.value)}>
+                  {list.map((l) => (
+                    <option value={`${l.id}`}>{l.name}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
             <table className="min-w-full divide-y divide-gray-200 ">
               <thead className="bg-gray-50 sticky top-0">
                 <tr className="bg-white border-b">
@@ -111,8 +99,8 @@ function TaskList() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {people.map((person) => (
-                  <TaskItem person={person} />
+                {taskList.map((task) => (
+                  <TaskItem task={task} loading={loading} index={index + 1} />
                 ))}
                 <tr>
                   <td></td>
@@ -141,7 +129,6 @@ function TaskList() {
           <AddCongViecModal />
         </Dialog>
       </Transition>
-      
     </div>
   );
 }

@@ -1,12 +1,28 @@
 import React, { Fragment, useState } from "react";
 import { Transition, Dialog } from "@headlessui/react";
-import SelectDuAnForm from "./SelectDuAnForm";
-import SelectNhomCongViecForm from "./SelectNhomCongViecForm";
 import Checklist from "./Checklist";
 import AssignPeople from "./AssignPeople";
-import Deadline from "./Deadline";
-
+import useProjectList from "hooks/useProjectList";
+import useLists from "hooks/useLists";
 function AddCongViecModal() {
+  const { projectList, loading } = useProjectList();
+
+  const [selectProject, setSelectProject] = useState("");
+  const [selectGroup, setSelectGroup] = useState("");
+  const [listing, setListing] = useState("");
+
+  const handleProjectChange = (selectedProject) => {
+    setSelectProject(selectedProject);
+    setListing(selectedProject);
+  };
+  const { list } = useLists(listing);
+  const handleGroupChange = (selectedGroup) => {
+    setSelectGroup(selectedGroup);
+    console.log(selectedGroup);
+  };
+  if (loading) {
+    return "";
+  }
   return (
     <div className="min-h-screen px-4  text-center">
       <Transition.Child
@@ -53,21 +69,61 @@ function AddCongViecModal() {
             </div>
             <div className="grid grid-cols-2 gap-4 mt-7">
               <div>
-                <SelectDuAnForm />
+                <span className="label-text text-black text-md font-bold">
+                  Chọn dự án
+                </span>
+                <select
+                  id="project"
+                  name="project"
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                  onChange={(e) => handleProjectChange(e.target.value)}
+                >
+                  <option>--Chọn dự án--</option>
+                  {projectList.map((project, index) => (
+                    <option value={`${project.id}`} key={index}>
+                      {project.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
-                <Deadline />
+                <div className="flex flex-col">
+                  <span className="label-text text-black font-semibold block">
+                    Hạn hoàn thành
+                  </span>
+                  <input
+                    className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
+                    type="date"
+                  />
+                </div>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-6 mb-10">
               <AssignPeople />
 
-              <SelectNhomCongViecForm />
+              <div>
+                <span className="label-text text-black text-md font-bold">
+                  Chọn nhóm công việc
+                </span>
+                <select
+                  id="location"
+                  name="location"
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                  onChange={(e) => handleGroupChange(e.target.value)}
+                >
+                  <option>--Chọn nhóm công việc</option>
+                  {list.map((l) => (
+                    <option key={l.id} value={l.id}>
+                      {l.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
-            <div>
+            {/* <div>
               <Checklist />
-            </div>
+            </div> */}
             <div className="form-control mt-4">
               <label className="label">
                 <span className="label-text text-black text-md font-bold">

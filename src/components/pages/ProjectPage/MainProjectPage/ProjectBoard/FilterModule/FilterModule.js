@@ -8,8 +8,8 @@ function FilterModule() {
   return (
     <div className="bg-white flex flex-row justify-between">
       <div className="flex flex-row py-3 px-5 items-center justify-start">
-        <FilterGroupCongViec />
-        <FilterDoneStatus />
+        {/* <FilterGroupCongViec />
+        <FilterDoneStatus /> */}
       </div>
       <div className="flex flex-row  items-center justify-start">
         <AddGroupCongViec />

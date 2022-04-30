@@ -6,13 +6,40 @@ import {
   XIcon,
   InformationCircleIcon,
 } from "@heroicons/react/outline";
+import { useParams } from "react-router-dom";
 import AssignPeople from "../../../../../congviec/AssignPeople";
 import Checklist from "../../../../../congviec/Checklist";
-function CongViecDetailModal({ closeTaskDetailModal }) {
+import useTaskDetail from "hooks/useTaskDetail";
+import useProjectDetail from "hooks/useProjectDetail";
+function CongViecDetailModal({ taskId, closeTaskDetailModal }) {
   const [percent, setPercent] = useState(0);
   const handlePercent = (e) => {
     setPercent(e.target.value);
   };
+  const projectId = useParams();
+  const { task } = useTaskDetail(taskId);
+  const { project, loading } = useProjectDetail(projectId.id);
+  console.log(project);
+  let admin;
+  if (loading) {
+    admin = "";
+  } else {
+    admin = (
+      <span className="">
+        {project.members.map((member) => {
+          if (member.role == "admin") {
+            return (
+              <p className="font-semibold text-[#d63031] text-sm">
+                {member.email}
+              </p>
+            );
+          } else {
+            return "";
+          }
+        })}
+      </span>
+    );
+  }
   return (
     <div className="min-h-screen px-4  text-center">
       <Transition.Child
@@ -102,27 +129,24 @@ function CongViecDetailModal({ closeTaskDetailModal }) {
             <div className="form-control">
               <label className="label">
                 <span className="label-text text-black text-md font-bold">
-                  Tên nhóm công việc
+                  Tên công việc
                 </span>
               </label>
               <input
                 placeholder="nhập tên nhóm công việc"
-                value="Xử lý frontend cho trang 1"
+                value={`${task.name}`}
                 className="input  bg-white text-black border-gray-300 border-2"
                 type="text"
               />
             </div>
             <div className="mt-3">
               <span className="text-black text-sm">
-                Người giao việc:{" "}
-                <span className="font-semibold text-[#d63031]">
-                  Vũ Hoàng Lâm
-                </span>
+                Người giao việc: {admin}
               </span>
             </div>
             <div className="grid grid-cols-2 mt-3">
               <div>
-                <AssignPeople />
+                <AssignPeople members={task.members} loading={loading} />
               </div>
             </div>
             <div className="mt-5">
@@ -138,11 +162,11 @@ function CongViecDetailModal({ closeTaskDetailModal }) {
                 name="comment"
                 id="comment"
                 className="text-black shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                defaultValue={""}
+                value={`${task.description}`}
               />
             </div>
             <div className="checklist mt-5">
-              <Checklist />
+              <Checklist checklists={task.checklists} loading={loading} />
             </div>
           </div>
         </div>
