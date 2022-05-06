@@ -1,15 +1,15 @@
-import { GET_PROJECTS } from "../../types";
+import { GET_LISTS } from "../../types";
 const initialState = {
-  projects: [],
+  lists: [],
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case GET_PROJECTS:
+    case GET_LISTS:
       return {
         ...state,
-        projects: payload,
+        lists: payload,
       };
     default:
       return state;

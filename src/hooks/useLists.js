@@ -14,6 +14,6 @@ export default function useLists(projectId) {
       }
       setLoading(false);
     })();
-  }, []);
+  }, [projectId]);
   return { list, loading };
 }

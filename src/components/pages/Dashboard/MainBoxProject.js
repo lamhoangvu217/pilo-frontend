@@ -2,24 +2,16 @@ import projectApi from "api/projectApi";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // import Skeleton from "react-loading-skeleton";
+// import useProjectList from "hooks/useProjectList";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useSelector, useDispatch } from "react-redux";
+import { getProjects } from "redux/actions/project";
 function MainBoxProject() {
-  const [projectList, setProjectList] = useState([]);
+  const projects = useSelector((state) => state.project.projects);
+  const dispatch = useDispatch();
   useEffect(() => {
-    (async () => {
-      try {
-        const { projects } = await projectApi.getAll();
-        const results = projects.data.filter((project) => {
-          return project !== null;
-        });
-        setProjectList(results);
-        console.log(projectList);
-      } catch (error) {
-        console.log("Faild to fetch project list");
-      }
-    })();
-  }, []);
-  if (projectList == null) return "";
+    dispatch(getProjects());
+  }, [dispatch]);
   return (
     <div className="w-full">
       {/* <input
@@ -32,7 +24,7 @@ function MainBoxProject() {
       /> */}
       <hr />
       <div className="mainbox_list w-full flex flex-col items-center justify-center">
-        {projectList.map((project) => (
+        {projects.map((project) => (
           <Link to={`/project/${project.id}`}>
             <div
               key={project.id}

@@ -18,7 +18,6 @@ function AddMemModal() {
     return { value: user.email, label: user.email, id: user.id };
   });
   const handleOptionSelect = (values) => {
-    console.log(values[0].id);
     setMemberId(values[0].id);
   };
   const handleAddMember = async () => {

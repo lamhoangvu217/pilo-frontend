@@ -1,8 +1,11 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CongViecDetailModal from "./CongViecDetail/CongViecDetailModal";
 import Moment from "react-moment";
-function TaskItem({ task, loading, index }) {
+import { useSelector, useDispatch } from "react-redux";
+import { getTask } from "redux/actions/tasks";
+import { BadgeCheckIcon } from "@heroicons/react/solid";
+function TaskItem({ task, index, listName, listId }) {
   let [taskDetailOpen, setTaskDetailOpen] = useState(false);
 
   function openTaskDetailModal() {
@@ -11,13 +14,14 @@ function TaskItem({ task, loading, index }) {
   function closeTaskDetailModal() {
     setTaskDetailOpen(false);
   }
-  if (loading) {
-    return "";
-  }
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getTask(task.id));
+  }, [dispatch]);
   return (
     <>
       <tr
-        key={task.id}
+        key={index}
         className="hover:bg-gray-100 cursor-pointer"
         onClick={openTaskDetailModal}
       >
@@ -28,16 +32,28 @@ function TaskItem({ task, loading, index }) {
           {task.name}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          {/* {person.group_task} */} can thuc hien
+          {/* {person.group_task} */} {listName}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          {/* {person.status_task} */} chua xong
+          {/* {person.status_task} */}{" "}
+          {task.progress == 100 ? (
+            <div className="flex flex-row">
+              <span>Đã hoàn thành</span>
+              <BadgeCheckIcon className="w-5 h-5 ml-1 text-green-600" />
+            </div>
+          ) : (
+            "Chưa hoàn thành"
+          )}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
           <Moment format="DD/MM/YYYY">{task.duedate}</Moment>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          {/* {person.assign} */} chua them nguoi
+          <div className="flex flex-col">
+            {task.members.map((member) => (
+              <span>{member.username}</span>
+            ))}
+          </div>
         </td>
       </tr>
       <Transition appear show={taskDetailOpen} as={Fragment}>
@@ -48,6 +64,7 @@ function TaskItem({ task, loading, index }) {
         >
           <CongViecDetailModal
             taskId={task.id}
+            listId={listId}
             closeTaskDetailModal={closeTaskDetailModal}
           />
         </Dialog>

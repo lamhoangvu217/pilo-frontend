@@ -14,6 +14,6 @@ export default function useTaskList(listId) {
       }
       setLoading(false);
     })();
-  }, []);
+  }, [listId]);
   return { taskList, loading };
 }

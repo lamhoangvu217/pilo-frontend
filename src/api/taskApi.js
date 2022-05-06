@@ -21,8 +21,76 @@ const taskApi = {
     });
   },
   create(data, listId) {
-    const url = `/api/lists/${listId}`;
+    const url = `/api/tasks/${listId}`;
     return axiosClient.post(url, data, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+  },
+  addMember(add, taskId, userId) {
+    const url = `/api/tasks/addMember/${add}/${taskId}/${userId}`;
+    return axiosClient.patch(
+      url,
+      {
+        add: add,
+        taskId: taskId,
+        userId: userId,
+      },
+      {
+        headers: {
+          authorization: `${token}`,
+        },
+      }
+    );
+  },
+  updateProgress(data, id) {
+    const url = `/api/tasks/progress/${id}`;
+    return axiosClient.patch(url, data, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+  },
+  addChecklist(taskId, data) {
+    const body = JSON.stringify(data);
+    const url = `/api/checklists/${taskId}`;
+    return axiosClient.post(url, body, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+  },
+  editChecklist(taskId, itemId, data) {
+    const body = JSON.stringify(data);
+    const url = `/api/checklists/${taskId}/${itemId}`;
+    return axiosClient.patch(url, body, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+  },
+  completeChecklist(formData) {
+    const { taskId, complete, itemId } = formData;
+    const url = `/api/checklists/${taskId}/${complete}/${itemId}`;
+    return axiosClient.patch(url, formData, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+  },
+  deleteChecklist(taskId, itemId) {
+    const url = `/api/checklists/${taskId}/${itemId}`;
+    return axiosClient.delete(url, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+  },
+  editTaskDescription(taskId, formData) {
+    const { description } = formData;
+    const url = `/api/tasks/edit/${taskId}`;
+    return axiosClient.patch(url, formData, {
       headers: {
         authorization: `${token}`,
       },

@@ -8,6 +8,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ThreeDotsWave from "components/loading/ThreeDotsWave";
 import { ArrowNarrowRightIcon } from "@heroicons/react/solid";
+import { useSelector, useDispatch } from "react-redux";
+import { getProjects } from "redux/actions/project";
 const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập tên của bạn"),
   description: yup.string().required("Vui lòng nhập chức vụ của bạn"),
@@ -24,9 +26,11 @@ function AddDuAnModal() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const dispatch = useDispatch();
   const onProjectSubmit = async (values) => {
     try {
       const projectData = await projectApi.create(values);
+      dispatch(getProjects());
       toast.success("Tạo dự án thành công!", {
         duration: 2000,
         position: "top-right",

@@ -1,20 +1,24 @@
 import React, { useState } from "react";
+import AddChecklist from "./AddChecklist";
 import ChecklistItem from "./ChecklistItem";
-function Checklist() {
-  const [checklistNum, setChecklistNum] = useState(0);
-  const checklists = [];
-  for (var i = 0; i < checklistNum; i++) {
-      checklists.push(<ChecklistItem key={i} />)
-  }
-  const onAddChecklist = () => {
-      setChecklistNum(checklistNum + 1)
-  }
+function Checklist({ task }) {
+  console.log(task);
   return (
     <div>
-      <span className="label-text text-black block font-bold">Checklist</span>
-      <button className="text-black label-text" onClick={onAddChecklist}>+ Thêm checklist mới</button>
+      {/* <span className="label-text text-black block font-bold">Checklist</span>
+      <button className="text-black label-text" onClick={onAddChecklist}>
+        + Thêm checklist mới
+      </button>
+      <div>{checklists}</div> */}
+      <div className="text-md font-bold mb-2 text-black">Checklist</div>
+      <div className="space-y-2">
+        {task.checklists.map((item) => (
+          <ChecklistItem key={item.id} item={item} task={task} />
+        ))}
+      </div>
+
       <div>
-        {checklists}
+        <AddChecklist taskId={task.id} />
       </div>
     </div>
   );

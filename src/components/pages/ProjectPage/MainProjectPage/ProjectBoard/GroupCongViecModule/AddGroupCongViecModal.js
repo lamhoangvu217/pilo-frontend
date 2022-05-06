@@ -7,6 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ThreeDotsWave from "components/loading/ThreeDotsWave";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getLists } from "redux/actions/lists";
 const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập tên nhóm công việc"),
 });
@@ -20,9 +22,11 @@ function AddGroupCongViecModal() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const dispatch = useDispatch();
   const onListSubmit = async (values) => {
     try {
       const listData = await listApi.create(values, projectIdFormat);
+      dispatch(getLists(projectIdFormat));
       toast.success("Tạo nhóm công việc thành công!", {
         duration: 2000,
         position: "top-right",
