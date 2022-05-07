@@ -96,5 +96,13 @@ const taskApi = {
       },
     });
   },
+  deleteTask(listId, taskId) {
+    const url = `/api/tasks/delete/${listId}/${taskId}`;
+    return axiosClient.delete(url, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+  },
 };
 export default taskApi;

@@ -20,7 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ThreeDotsWave from "components/loading/ThreeDotsWave";
 import Moment from "react-moment";
-import { addTaskMember } from "redux/actions/tasks";
+import { addTaskMember, deleteTask, getTasks } from "redux/actions/tasks";
 import { editTaskDescription } from "redux/actions/tasks";
 const schema = yup.object().shape({
   name: yup.string(),
@@ -28,7 +28,13 @@ const schema = yup.object().shape({
   duedate: yup.date(),
   progress: yup.number(),
 });
-function CongViecDetailModal({ taskId, closeTaskDetailModal, listId }) {
+function CongViecDetailModal({
+  taskId,
+  closeTaskDetailModal,
+  taskDetailOpen,
+  setTaskDetailOpen,
+  listId,
+}) {
   const {
     register,
     handleSubmit,
@@ -46,6 +52,7 @@ function CongViecDetailModal({ taskId, closeTaskDetailModal, listId }) {
   const members = task.members.map((member) => member.user);
   useEffect(() => {
     dispatch(getTask(taskId));
+    dispatch(getTasks(listId));
   }, [dispatch]);
 
   const isLoggedIn = !!loggedInUser.id;
@@ -62,7 +69,16 @@ function CongViecDetailModal({ taskId, closeTaskDetailModal, listId }) {
       })
     );
   };
-  const onDescriptionSubmit = async (e) => {
+  const handleDelete = async () => {
+    dispatch(deleteTask(listId, taskId));
+    toast.success("Xóa công việc thành công!", {
+      duration: 2000,
+      position: "top-right",
+      icon: "👏",
+    });
+    setTaskDetailOpen(false);
+  };
+  const onDescriptionSubmit = (e) => {
     e.preventDefault();
     dispatch(editTaskDescription(taskId, { newDescription }));
     setEditMode(false);
@@ -193,6 +209,11 @@ function CongViecDetailModal({ taskId, closeTaskDetailModal, listId }) {
                 </div>
               </div>
               <div className="flex flex-row items-center">
+                <div>
+                  <button onClick={handleDelete} className="btn btn-error">
+                    Delete
+                  </button>
+                </div>
                 <div onClick={closeTaskDetailModal} className="cursor-pointer">
                   <XIcon className="w-5 h-5 text-black" />
                 </div>

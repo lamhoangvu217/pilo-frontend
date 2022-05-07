@@ -7,6 +7,7 @@ import {
   DELETE_CHECKLIST_ITEM,
   ADD_TASK_MEMBER,
   EDIT_DESCRIPTION,
+  DELETE_TASK,
 } from "../types";
 import taskApi from "api/taskApi";
 export const getTasks = (listId) => async (dispatch) => {
@@ -65,6 +66,14 @@ export const editTaskDescription = (taskId, formData) => async (dispatch) => {
   const res = await taskApi.editTaskDescription(taskId, description);
   dispatch({
     type: EDIT_DESCRIPTION,
+    payload: res.data,
+  });
+};
+
+export const deleteTask = (listId, taskId) => async (dispatch) => {
+  const res = await taskApi.deleteTask(listId, taskId);
+  dispatch({
+    type: DELETE_TASK,
     payload: res.data,
   });
 };

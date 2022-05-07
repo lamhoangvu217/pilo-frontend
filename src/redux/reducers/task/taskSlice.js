@@ -7,6 +7,7 @@ import {
   DELETE_CHECKLIST_ITEM,
   ADD_TASK_MEMBER,
   EDIT_DESCRIPTION,
+  DELETE_TASK,
 } from "../../types";
 const initialState = {
   tasks: [],
@@ -35,6 +36,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         task: { ...state.task, ...payload },
+      };
+    case DELETE_TASK:
+      return {
+        ...state,
+        tasks: payload,
       };
     default:
       return state;

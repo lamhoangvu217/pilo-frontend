@@ -66,6 +66,7 @@ function TaskItem({ task, index, listName, listId }) {
             taskId={task.id}
             listId={listId}
             closeTaskDetailModal={closeTaskDetailModal}
+            setTaskDetailOpen={setTaskDetailOpen}
           />
         </Dialog>
       </Transition>
