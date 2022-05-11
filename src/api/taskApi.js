@@ -12,6 +12,17 @@ const taskApi = {
       tasks: tasks,
     };
   },
+  async getAllByProjectId(projectId) {
+    const url = `/api/tasks/projectTasks/${projectId}`;
+    const tasks = await axiosClient.get(url, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+    return {
+      tasks: tasks,
+    }
+  },
   get(id) {
     const url = `/api/tasks/${id}`;
     return axiosClient.get(url, {
@@ -20,8 +31,8 @@ const taskApi = {
       },
     });
   },
-  create(data, listId) {
-    const url = `/api/tasks/${listId}`;
+  create(data, listId, projectId) {
+    const url = `/api/tasks/${listId}/${projectId}`;
     return axiosClient.post(url, data, {
       headers: {
         authorization: `${token}`,

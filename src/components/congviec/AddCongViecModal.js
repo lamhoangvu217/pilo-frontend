@@ -10,7 +10,7 @@ import * as yup from "yup";
 import ThreeDotsWave from "components/loading/ThreeDotsWave";
 import taskApi from "api/taskApi";
 import { useSelector, useDispatch } from "react-redux";
-import { getTasks } from "redux/actions/tasks";
+import { getTasks, getTasksByProjectId } from "redux/actions/tasks";
 const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập tên công việc"),
   description: yup.string().required("Vui lòng nhập mô tả công việc"),
@@ -24,7 +24,6 @@ function AddCongViecModal() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
   const { projectList, loading } = useProjectList();
   const dispatch = useDispatch();
   const [selectProject, setSelectProject] = useState("");
@@ -41,8 +40,9 @@ function AddCongViecModal() {
   };
   const onTaskSubmit = async (values) => {
     try {
-      const taskData = await taskApi.create(values, selectGroup);
+      const taskData = await taskApi.create(values, selectGroup, selectProject);
       dispatch(getTasks(selectGroup));
+      dispatch(getTasksByProjectId(selectProject));
       toast.success("Tạo công việc thành công!", {
         duration: 2000,
         position: "top-right",

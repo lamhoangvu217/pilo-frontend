@@ -3,16 +3,34 @@ import { Transition, Dialog } from "@headlessui/react";
 import { useParams } from "react-router-dom";
 import useProjectDetail from "hooks/useProjectDetail";
 import Moment from "react-moment";
-import projectApi from "api/projectApi";
-import toast from "react-hot-toast";
 import EditDuAnModal from "components/duan/EditDuAnModal";
+import { useSelector, useDispatch } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
+import ThreeDotsWave from "components/loading/ThreeDotsWave";
+import { useNavigate } from "react-router-dom";
 
-function ProjectDetailModal() {
+import { deleteProject } from "redux/actions/project";
+function ProjectDetailModal({ setViewProjectOpen }) {
+  let navigate = useNavigate();
   const projectId = useParams();
+  const realProjectId = projectId.id;
   const { project, loading } = useProjectDetail(projectId.id);
-  const [editable, setEditable] = useState(false);
   let [addDuAnOpen, setAddDuAnOpen] = useState(false);
-
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+  const dispatch = useDispatch();
+  const onDelete = async () => {
+    dispatch(deleteProject(realProjectId));
+    toast.success("Xóa dự án thành công!", {
+      duration: 2000,
+      position: "top-right",
+      icon: "👏",
+    });
+    setTimeout(() => navigate("/dashboard"), 2000);
+    await sleep(2000);
+    window.location.reload();
+  };
   function closeDuAnModal() {
     setAddDuAnOpen(false);
   }
@@ -20,11 +38,36 @@ function ProjectDetailModal() {
   function openDuAnModal() {
     setAddDuAnOpen(true);
   }
+  let [deleteDuAnOpen, setDeleteDuAnOpen] = useState(false);
+
+  function closeDeleteDuAnModal() {
+    setDeleteDuAnOpen(false);
+  }
+
+  function openDeleteDuAnModal() {
+    setDeleteDuAnOpen(true);
+  }
   if (loading) {
     return "";
   }
   return (
     <div className="min-h-screen px-4  text-center">
+      <Toaster
+        toastOptions={{
+          success: {
+            style: {
+              background: "#2ecc71",
+              color: "white",
+            },
+          },
+          error: {
+            style: {
+              background: "#e74c3c",
+              color: "white",
+            },
+          },
+        }}
+      />
       <Transition.Child
         as={Fragment}
         enter="ease-out duration-300"
@@ -137,9 +180,15 @@ function ProjectDetailModal() {
                       </tbody>
                     </table>
                   </div>
-                  <div className="mt-4 text-center">
+                  <div className="mt-4 text-center justify-center flex flex-row space-x-4">
                     <button className="btn" onClick={openDuAnModal}>
                       Sửa dự án
+                    </button>
+                    <button
+                      className="btn btn-error text-white"
+                      onClick={openDeleteDuAnModal}
+                    >
+                      Xóa dự án
                     </button>
                   </div>
                 </div>
@@ -155,6 +204,64 @@ function ProjectDetailModal() {
           onClose={closeDuAnModal}
         >
           <EditDuAnModal />
+        </Dialog>
+      </Transition>
+      <Transition appear show={deleteDuAnOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={closeDeleteDuAnModal}
+        >
+          <div className="min-h-screen px-4 text-center">
+            <Toaster />
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Dialog.Overlay className="fixed inset-0" />
+            </Transition.Child>
+
+            {/* This element is to trick the browser into centering the modal contents. */}
+            <span
+              className="inline-block h-screen align-middle"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <div className="inline-block w-full h-full max-w-xl overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-md">
+                <div className="px-[30px] py-[25px] flex flex-col">
+                  <span className="text-black font-semibold text-center">
+                    Bạn có chắc muốn xóa dự án không?
+                  </span>
+                  <div className="flex flex-row space-x-4 mt-3 justify-center">
+                    <button className="btn  bg-green-500 border-0" onClick={() => setDeleteDuAnOpen(false)}>
+                      Không
+                    </button>
+                    <button
+                      className="btn border-0 bg-red-500"
+                      onClick={onDelete}
+                    >
+                      Có
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </Transition.Child>
+          </div>
         </Dialog>
       </Transition>
     </div>

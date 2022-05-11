@@ -28,7 +28,7 @@ function ViewProjectDetail() {
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={closeViewProjectModal}
         >
-          <ProjectDetailModal />
+          <ProjectDetailModal setViewProjectOpen={setViewProjectOpen} />
         </Dialog>
       </Transition>
     </>

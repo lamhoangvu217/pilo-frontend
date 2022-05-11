@@ -8,6 +8,7 @@ import {
   ADD_TASK_MEMBER,
   EDIT_DESCRIPTION,
   DELETE_TASK,
+  GET_TASKS_BY_PROJECT
 } from "../types";
 import taskApi from "api/taskApi";
 export const getTasks = (listId) => async (dispatch) => {
@@ -17,7 +18,13 @@ export const getTasks = (listId) => async (dispatch) => {
     payload: tasks.data,
   });
 };
-
+export const getTasksByProjectId = (projectId) => async (dispatch) => {
+  const { tasksByProjectId } = await taskApi.getAllByProjectId(projectId);
+  dispatch({
+    type: GET_TASKS_BY_PROJECT,
+    payload: tasksByProjectId.data
+  })
+}
 export const getTask = (id) => async (dispatch) => {
   const task = await taskApi.get(id);
   dispatch({

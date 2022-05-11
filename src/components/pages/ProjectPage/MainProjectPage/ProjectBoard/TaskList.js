@@ -8,14 +8,14 @@ import TaskItem from "./TaskItem";
 import { useSelector, useDispatch } from "react-redux";
 import { getTasks } from "redux/actions/tasks";
 import { getLists } from "redux/actions/lists";
-import { getTask } from "redux/actions/tasks";
 // import useLists from "hooks/useLists";
 import { useParams } from "react-router-dom";
+import taskApi from "api/taskApi";
 function TaskList() {
   let [addJobOpen, setAddJobOpen] = useState(false);
   const projectId = useParams();
+
   const projectIdFormat = projectId.id;
-  // const { list } = useLists(projectIdFormat);
   const [width, height] = useWindowSize();
   const [listId, setListId] = useState("");
   const [listName, setListName] = useState("");
@@ -27,21 +27,21 @@ function TaskList() {
   function openAddJobModal() {
     setAddJobOpen(true);
   }
+
+  const index = 0;
+  const tasks = useSelector((state) => state.task.tasks);
+  const lists = useSelector((state) => state.list.lists);
+  const dispatch = useDispatch();
   const handleSelect = (e) => {
     setListId(e.target.value);
     setListName(e.target.options[e.target.selectedIndex].text);
   };
-  const index = 0;
-  // const { taskList, loading } = useTaskList(listId);
-  const tasks = useSelector((state) => state.task.tasks);
-  const lists = useSelector((state) => state.list.lists);
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getLists(projectIdFormat));
   }, [dispatch]);
   useEffect(() => {
     dispatch(getTasks(listId));
-  }, [listId, projectIdFormat]);
+  }, [listId]);
   return (
     <div className="flex flex-col">
       <div className="">

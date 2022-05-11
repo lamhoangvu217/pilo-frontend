@@ -8,10 +8,12 @@ import {
   ADD_TASK_MEMBER,
   EDIT_DESCRIPTION,
   DELETE_TASK,
+  GET_TASKS_BY_PROJECT
 } from "../../types";
 const initialState = {
   tasks: [],
   task: null,
+  tasksByProjectId: []
 };
 
 export default function (state = initialState, action) {
@@ -22,6 +24,11 @@ export default function (state = initialState, action) {
         ...state,
         tasks: payload,
       };
+    case GET_TASKS_BY_PROJECT:
+      return {
+        ...state,
+        tasksByProjectId: payload
+      }
     case GET_TASK:
       return {
         ...state,

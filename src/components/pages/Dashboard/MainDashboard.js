@@ -31,11 +31,11 @@ function MainDashboard(props) {
             the result of selfishness"
           </span>
         </div>
-        <div className="mt-3">
+        {/* <div className="mt-3">
           <button className="px-3 py-2 bg-violet-500 text-white rounded-md">
             Bật chế độ tập trung
           </button>
-        </div>
+        </div> */}
       </div>
       <div className="fixed bg-[#192a56] px-12 py-10 rounded-xl top-20  right-8 flex flex-col">
         <span className="text-white font-medium w-64  mb-3">

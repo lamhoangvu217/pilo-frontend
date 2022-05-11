@@ -71,12 +71,13 @@ function CongViecDetailModal({
   };
   const handleDelete = async () => {
     dispatch(deleteTask(listId, taskId));
+    dispatch(getTasks(listId));
     toast.success("Xóa công việc thành công!", {
       duration: 2000,
       position: "top-right",
+      className: "bg-green-500 text-white",
       icon: "👏",
     });
-    setTaskDetailOpen(false);
   };
   const onDescriptionSubmit = (e) => {
     e.preventDefault();
@@ -210,7 +211,7 @@ function CongViecDetailModal({
               </div>
               <div className="flex flex-row items-center">
                 <div>
-                  <button onClick={handleDelete} className="btn btn-error">
+                  <button onClick={handleDelete} className="btn btn-error text-white mr-4">
                     Delete
                   </button>
                 </div>
@@ -307,7 +308,7 @@ function CongViecDetailModal({
                   className="btn btn-primary mr-2 disabled:text-gray-400"
                   disabled={!editMode}
                 >
-                  Sửa dự án
+                  Sửa mô tả
                 </button>
               </div>
             </form>
