@@ -33,6 +33,10 @@ const Register = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({ resolver: yupResolver(schema) });
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   const onRegisterSubmit = async (values) => {
     try {
       const action = registerUser(values);
@@ -48,6 +52,8 @@ const Register = () => {
         }
       );
       setTimeout(() => successSignUp("/dashboard"), 2500);
+      await sleep(2500);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
