@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://desolate-harbor-52582.herokuapp.com/",
+  baseURL: "https://pilo-backend.herokuapp.com/",
   headers: {
     "Content-Type": "application/json",
   },

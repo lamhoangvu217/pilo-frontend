@@ -24,11 +24,6 @@ export default function (state = initialState, action) {
         ...state,
         tasks: payload,
       };
-    case GET_TASKS_BY_PROJECT:
-      return {
-        ...state,
-        tasksByProjectId: payload
-      }
     case GET_TASK:
       return {
         ...state,

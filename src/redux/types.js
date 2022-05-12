@@ -1,6 +1,5 @@
 export const GET_PROJECTS = "GET_PROJECTS";
 export const GET_TASKS = "GET_TASKS";
-export const GET_TASKS_BY_PROJECT = "GET_TASKS_BY_PROJECT";
 export const GET_TASK = "GET_TASK";
 export const GET_LISTS = "GET_LISTS";
 export const ADD_TASK_MEMBER = "ADD_TASK_MEMBER";

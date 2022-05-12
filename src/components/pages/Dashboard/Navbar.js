@@ -4,6 +4,7 @@ import AddModule from "./NavbarModule/AddModule";
 import Notification from "./Notification";
 import ProfileModal from "./ProfileModal";
 function Navbar({ userNavigation, setSidebarOpen, classNames }) {
+  console.log("hic hic");
   return (
     <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white shadow">
       <button
