@@ -8,7 +8,7 @@ import {
   ADD_TASK_MEMBER,
   EDIT_DESCRIPTION,
   DELETE_TASK,
-  GET_TASKS_BY_PROJECT
+  GET_TASKS_BY_USER_ID,
 } from "../../types";
 const initialState = {
   tasks: [],
@@ -20,6 +20,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case GET_TASKS:
+    case GET_TASKS_BY_USER_ID:
       return {
         ...state,
         tasks: payload,

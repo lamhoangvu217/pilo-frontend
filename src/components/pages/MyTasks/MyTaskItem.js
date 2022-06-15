@@ -1,15 +1,15 @@
-import React, { useState, Fragment, useEffect } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import CongViecDetailModal from "./CongViecDetail/CongViecDetailModal";
-import Moment from "react-moment";
-import { useSelector, useDispatch } from "react-redux";
-import { getTask } from "redux/actions/tasks";
+import React, { Fragment, useState, useEffect } from "react";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
-import { useParams } from "react-router-dom";
-function TaskItem({ task, index, listName, listId }) {
+import Moment from "react-moment";
+import { Dialog, Transition } from "@headlessui/react";
+import { useDispatch, useSelector } from "react-redux";
+
+import CongViecDetailModal from "../ProjectPage/MainProjectPage/ProjectBoard/CongViecDetail/CongViecDetailModal";
+import { getTask } from "redux/actions/tasks";
+function MyTaskItem(task, index) {
   let [taskDetailOpen, setTaskDetailOpen] = useState(false);
-  const projectId = useParams();
-  const projectIdFormat = projectId.id
+
+  const taskDetail = task.task;
   function openTaskDetailModal() {
     setTaskDetailOpen(true);
   }
@@ -18,7 +18,7 @@ function TaskItem({ task, index, listName, listId }) {
   }
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getTask(task.id));
+    dispatch(getTask(taskDetail.id));
   }, [dispatch]);
   return (
     <>
@@ -28,31 +28,30 @@ function TaskItem({ task, index, listName, listId }) {
         onClick={openTaskDetailModal}
       >
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-          {index}
+          {taskDetail.name}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-          {task.name}
+          {taskDetail.projectName}
+          {/* {project.name} */}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          {/* {person.group_task} */} {listName}
+          <Moment format="DD/MM/YYYY">{taskDetail.duedate}</Moment>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
           {/* {person.status_task} */}{" "}
-          {task.progress == 100 ? (
+          {taskDetail.progress === 100 ? (
             <div className="flex flex-row">
               <span>Đã hoàn thành</span>
               <BadgeCheckIcon className="w-5 h-5 ml-1 text-green-600" />
             </div>
           ) : (
-            "Chưa hoàn thành"
+            `${taskDetail.progress}%`
           )}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          <Moment format="DD/MM/YYYY">{task.duedate}</Moment>
-        </td>
+
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
           <div className="flex flex-col">
-            {task.members.map((member) => (
+            {taskDetail.members.map((member) => (
               <span>{member.username}</span>
             ))}
           </div>
@@ -65,11 +64,10 @@ function TaskItem({ task, index, listName, listId }) {
           onClose={closeTaskDetailModal}
         >
           <CongViecDetailModal
-            taskId={task.id}
-            listId={listId}
-            projectId={projectIdFormat}
+            taskId={taskDetail.id}
+            listId={taskDetail.listId}
             closeTaskDetailModal={closeTaskDetailModal}
-            setTaskDetailOpen={setTaskDetailOpen}
+            projectId={taskDetail.projectId}
           />
         </Dialog>
       </Transition>
@@ -77,4 +75,4 @@ function TaskItem({ task, index, listName, listId }) {
   );
 }
 
-export default TaskItem;
+export default MyTaskItem;

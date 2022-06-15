@@ -51,6 +51,35 @@ const projectApi = {
       }
     );
   },
+  addAdmin(userId, projectId) {
+    const url = `/api/projects/addAdmin/${userId}/${projectId}`;
+    return axiosClient.put(
+      url,
+      {
+        userId: userId,
+        projectId: projectId,
+      },
+      {
+        headers: {
+          authorization: `${token}`,
+        },
+      }
+    );
+  },
+  editPermission(data, projectId) {
+    const url = `/api/projects/editPermission/${projectId}`;
+    return axiosClient.patch(
+      url,
+      {
+        permissions: data,
+      },
+      {
+        headers: {
+          authorization: `${token}`,
+        },
+      }
+    );
+  },
 };
 
 export default projectApi;

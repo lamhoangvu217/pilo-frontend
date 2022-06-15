@@ -10,6 +10,8 @@ import ThreeDotsWave from "components/loading/ThreeDotsWave";
 import { useNavigate } from "react-router-dom";
 
 import { deleteProject } from "redux/actions/project";
+import QuanLyThanhVienModal from "components/duan/ThanhVien/QuanLyThanhVienModal";
+import PhanQuyenSuDungModal from "components/duan/ThanhVien/PhanQuyenSuDungModal";
 function ProjectDetailModal({ setViewProjectOpen }) {
   let navigate = useNavigate();
   const projectId = useParams();
@@ -47,8 +49,58 @@ function ProjectDetailModal({ setViewProjectOpen }) {
   function openDeleteDuAnModal() {
     setDeleteDuAnOpen(true);
   }
+  let [quanlythanhvienOpen, setQuanlythanhvienOpen] = useState(false);
+
+  function closeQuanlythanhvienModal() {
+    setQuanlythanhvienOpen(false);
+  }
+
+  function openQuanlythanhvienModal() {
+    setQuanlythanhvienOpen(true);
+  }
+  let [phanquyenOpen, setPhanquyenOpen] = useState(false);
+
+  function closePhanquyenModal() {
+    setPhanquyenOpen(false);
+  }
+
+  function openPhanquyenModal() {
+    setPhanquyenOpen(true);
+  }
+  var user = localStorage.getItem("user");
+  var userObject = JSON.parse(user);
+  var userId = userObject.id;
+  var identify = "";
+  let toolBoxForAdmin;
   if (loading) {
     return "";
+  } else {
+    const normalRole = project.members.filter((e) => e.role === "normal");
+    if (normalRole.some((e) => e.user === userId)) {
+      identify = "member";
+    } else {
+      identify = "admin";
+    }
+  }
+  if (identify === "admin") {
+    toolBoxForAdmin = (
+      <>
+        <button className="btn btn-primary " onClick={openPhanquyenModal}>
+          Phân quyền sử dụng
+        </button>
+        <button className="btn " onClick={openDuAnModal}>
+          Sửa dự án
+        </button>
+        <button
+          className="btn btn-error text-white"
+          onClick={openDeleteDuAnModal}
+        >
+          Xóa dự án
+        </button>
+      </>
+    );
+  } else if (identify === "member") {
+    toolBoxForAdmin = <></>;
   }
   return (
     <div className="min-h-screen px-4  text-center">
@@ -181,15 +233,13 @@ function ProjectDetailModal({ setViewProjectOpen }) {
                     </table>
                   </div>
                   <div className="mt-4 text-center justify-center flex flex-row space-x-4">
-                    <button className="btn" onClick={openDuAnModal}>
-                      Sửa dự án
-                    </button>
                     <button
-                      className="btn btn-error text-white"
-                      onClick={openDeleteDuAnModal}
+                      className="btn btn-warning text-white"
+                      onClick={openQuanlythanhvienModal}
                     >
-                      Xóa dự án
+                      Quản lý thành viên
                     </button>
+                    {toolBoxForAdmin}
                   </div>
                 </div>
               </div>
@@ -204,6 +254,24 @@ function ProjectDetailModal({ setViewProjectOpen }) {
           onClose={closeDuAnModal}
         >
           <EditDuAnModal />
+        </Dialog>
+      </Transition>
+      <Transition appear show={quanlythanhvienOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={closeQuanlythanhvienModal}
+        >
+          <QuanLyThanhVienModal />
+        </Dialog>
+      </Transition>
+      <Transition appear show={phanquyenOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={closePhanquyenModal}
+        >
+          <PhanQuyenSuDungModal />
         </Dialog>
       </Transition>
       <Transition appear show={deleteDuAnOpen} as={Fragment}>
@@ -248,7 +316,10 @@ function ProjectDetailModal({ setViewProjectOpen }) {
                     Bạn có chắc muốn xóa dự án không?
                   </span>
                   <div className="flex flex-row space-x-4 mt-3 justify-center">
-                    <button className="btn  bg-green-500 border-0" onClick={() => setDeleteDuAnOpen(false)}>
+                    <button
+                      className="btn  bg-green-500 border-0"
+                      onClick={() => setDeleteDuAnOpen(false)}
+                    >
                       Không
                     </button>
                     <button

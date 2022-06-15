@@ -4,16 +4,17 @@ import {
   completeChecklistItem,
   editChecklistItem,
   deleteChecklistItem,
+  getTask
 } from "redux/actions/tasks";
 import { XIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 function ChecklistItem({ item, task }) {
   const [text, setText] = useState(item.text);
   const [editing, setEditing] = useState(false);
   const dispatch = useDispatch();
-
   useEffect(() => {
     setText(item.text);
   }, [item.text]);
+  
   const onEdit = async (e) => {
     e.preventDefault();
     dispatch(editChecklistItem(task.id, item._id, { text }));
@@ -29,7 +30,6 @@ function ChecklistItem({ item, task }) {
       })
     );
   };
-
   const onDelete = async (e) => {
     dispatch(deleteChecklistItem(task.id, item._id));
   };

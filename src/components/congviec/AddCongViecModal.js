@@ -14,7 +14,8 @@ import { getTasks } from "redux/actions/tasks";
 const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập tên công việc"),
   description: yup.string().required("Vui lòng nhập mô tả công việc"),
-  duedate: yup.date().required("Vui lòng nhập hạn hoàn thành"),
+  start_date: yup.date().required("Vui lòng nhập hạn hoàn thành"),
+  end_date: yup.date().required("Vui lòng nhập hạn hoàn thành"),
 });
 function AddCongViecModal() {
   const {
@@ -27,12 +28,15 @@ function AddCongViecModal() {
   const { projectList, loading } = useProjectList();
   const dispatch = useDispatch();
   const [selectProject, setSelectProject] = useState("");
-  const [selectGroup, setSelectGroup] = useState("");
-
-  const handleProjectChange = (selectedProject) => {
-    setSelectProject(selectedProject);
-  };
   const { project } = useProjectDetail(selectProject);
+  const [selectGroup, setSelectGroup] = useState("");
+  const [selectProjectName, setSelectProjectName] = useState("");
+  const handleProjectChange = (e) => {
+    setSelectProject(e.target.value);
+    setSelectProjectName(e.target.options[e.target.selectedIndex].text);
+  
+  };
+
   const { list } = useLists(selectProject);
 
   const handleGroupChange = (selectedGroup) => {
@@ -40,7 +44,13 @@ function AddCongViecModal() {
   };
   const onTaskSubmit = async (values) => {
     try {
-      const taskData = await taskApi.create(values, selectGroup);
+      
+      const taskData = await taskApi.create(
+        values,
+        selectProject,
+        selectGroup,
+        selectProjectName
+      );
       dispatch(getTasks(selectGroup));
       toast.success("Tạo công việc thành công!", {
         duration: 2000,
@@ -101,38 +111,7 @@ function AddCongViecModal() {
                   {...register("name")}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4 mt-7">
-                <div>
-                  <span className="label-text text-black text-md font-bold">
-                    Chọn dự án
-                  </span>
-                  <select
-                    id="project"
-                    name="project"
-                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                    onChange={(e) => handleProjectChange(e.target.value)}
-                  >
-                    <option value="0">--Chọn dự án--</option>
-                    {projectList.map((project, index) => (
-                      <option value={`${project.id}`} key={index}>
-                        {project.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <div className="flex flex-col">
-                    <span className="label-text text-black font-semibold block">
-                      Hạn hoàn thành
-                    </span>
-                    <input
-                      className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
-                      type="date"
-                      {...register("duedate")}
-                    />
-                  </div>
-                </div>
-              </div>
+
               <div className="grid grid-cols-2 gap-4 mt-6 mb-10">
                 <div>
                   <span className="label-text text-black text-md font-bold">
@@ -152,8 +131,48 @@ function AddCongViecModal() {
                     ))}
                   </select>
                 </div>
-              </div>
 
+                <div>
+                  <span className="label-text text-black text-md font-bold">
+                    Chọn dự án
+                  </span>
+                  <select
+                    id="project"
+                    name="project"
+                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    onChange={(e) => handleProjectChange(e)}
+                  >
+                    <option value="0">--Chọn dự án--</option>
+                    {projectList.map((project, index) => (
+                      <option value={`${project.id}`} key={index}>
+                        {project.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col">
+                  <span className="label-text text-black font-semibold block">
+                    Ngày bắt đầu
+                  </span>
+                  <input
+                    className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
+                    type="date"
+                    {...register("start_date")}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="label-text text-black font-semibold block">
+                    Ngày kết thúc
+                  </span>
+                  <input
+                    className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
+                    type="date"
+                    {...register("end_date")}
+                  />
+                </div>
+              </div>
               {/* <div>
               <Checklist />
             </div> */}

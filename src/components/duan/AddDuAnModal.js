@@ -87,32 +87,25 @@ function AddDuAnModal() {
                   {...register("name")}
                 />
               </div>
-
-              <div className="date-range mt-3 flex flex-row justify-between">
-                <div>
-                  <span className="label-text text-black font-semibold block mb-2 mt-1">
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div className="flex flex-col">
+                  <span className="label-text text-black font-semibold block">
                     Ngày bắt đầu
                   </span>
                   <input
-                    className="input font-medium bg-white  text-black rounded-lg py-4 border-2 border-gray-300"
+                    className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
                     type="date"
                     {...register("start_date")}
-                    placeholder="Ngày bắt đầu"
                   />
                 </div>
-                <ArrowNarrowRightIcon className="w-8 h-8 text-gray-300 mt-10" />
-
-                <div>
-                  <span className="label-text text-black font-semibold block mb-2 mt-1">
+                <div className="flex flex-col">
+                  <span className="label-text text-black font-semibold block">
                     Ngày kết thúc
                   </span>
                   <input
-                    className={
-                      "input font-medium bg-white  text-black rounded-lg py-4 border-2 border-gray-300"
-                    }
+                    className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
                     type="date"
                     {...register("end_date")}
-                    placeholder="Ngày kết thúc"
                   />
                 </div>
               </div>

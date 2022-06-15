@@ -11,7 +11,7 @@ function MainDashboard(props) {
   }
   return (
     <main
-      className="bg-white w-full px-5 "
+      className="bg-white  w-full px-5 "
       style={{ height: `${mainHeight}px` }}
     >
       <div className="fixed bottom-6 ">

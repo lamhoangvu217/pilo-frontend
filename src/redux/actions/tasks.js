@@ -8,13 +8,20 @@ import {
   ADD_TASK_MEMBER,
   EDIT_DESCRIPTION,
   DELETE_TASK,
-  GET_TASKS_BY_PROJECT
+  GET_TASKS_BY_USER_ID,
 } from "../types";
 import taskApi from "api/taskApi";
 export const getTasks = (listId) => async (dispatch) => {
   const { tasks } = await taskApi.getAll(listId);
   dispatch({
     type: GET_TASKS,
+    payload: tasks.data,
+  });
+};
+export const getTasksByUserId = (userId) => async (dispatch) => {
+  const { tasks } = await taskApi.getAllByUserId(userId);
+  dispatch({
+    type: GET_TASKS_BY_USER_ID,
     payload: tasks.data,
   });
 };
@@ -61,12 +68,11 @@ export const addTaskMember = (formData) => async (dispatch) => {
     payload: member.data,
   });
 };
-export const editTaskDescription = (taskId, formData) => async (dispatch) => {
-  const { description } = formData;
-  const res = await taskApi.editTaskDescription(taskId, description);
+export const editTaskDescription = (formData, taskId) => async (dispatch) => {
+  const { description } = await taskApi.editTaskDescription(formData, taskId)
   dispatch({
     type: EDIT_DESCRIPTION,
-    payload: res.data,
+    payload: description.data,
   });
 };
 

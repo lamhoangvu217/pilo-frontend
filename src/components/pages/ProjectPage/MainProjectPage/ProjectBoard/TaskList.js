@@ -4,13 +4,11 @@ import AddCongViecModal from "../../../../congviec/AddCongViecModal";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 import FilterModule from "./FilterModule/FilterModule";
 import TaskItem from "./TaskItem";
-// import useTaskList from "hooks/useTaskList";
 import { useSelector, useDispatch } from "react-redux";
 import { getTasks } from "redux/actions/tasks";
 import { getLists } from "redux/actions/lists";
-// import useLists from "hooks/useLists";
 import { useParams } from "react-router-dom";
-import taskApi from "api/taskApi";
+import useProjectDetail from "hooks/useProjectDetail";
 function TaskList() {
   let [addJobOpen, setAddJobOpen] = useState(false);
   const projectId = useParams();
@@ -42,6 +40,61 @@ function TaskList() {
   useEffect(() => {
     dispatch(getTasks(listId));
   }, [listId]);
+  var user = localStorage.getItem("user");
+  var userObject = JSON.parse(user);
+  var userId = userObject.id;
+  let addTaskButton;
+  const { project, loading } = useProjectDetail(projectIdFormat);
+  var identify = "";
+  if (loading) {
+    return "";
+  } else {
+    const normalRole = project.members.filter((e) => e.role === "normal");
+    if (normalRole.some((e) => e.user === userId)) {
+      identify = "member";
+    } else {
+      identify = "admin";
+    }
+  }
+  if (identify === "admin") {
+    addTaskButton = (
+      <tr>
+        <td></td>
+        <td
+          onClick={openAddJobModal}
+          className="text-teal-500 font-medium text-sm cursor-pointer px-5 py-4"
+        >
+          + Thêm công việc
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    );
+  } else if (identify === "member") {
+    if (project.permissions.includes("addTask")) {
+      addTaskButton = (
+        <tr>
+          <td></td>
+          <td
+            onClick={openAddJobModal}
+            className="text-teal-500 font-medium text-sm cursor-pointer px-5 py-4"
+          >
+            + Thêm công việc
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      );
+    } else {
+      addTaskButton = (
+        <></>
+      )
+    }
+  }
   return (
     <div className="flex flex-col">
       <div className="">
@@ -122,19 +175,7 @@ function TaskList() {
                     index={index + 1}
                   />
                 ))}
-                <tr>
-                  <td></td>
-                  <td
-                    onClick={openAddJobModal}
-                    className="text-teal-500 font-medium text-sm cursor-pointer px-5 py-4"
-                  >
-                    + Thêm công việc
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+                {addTaskButton}
               </tbody>
             </table>
           </div>

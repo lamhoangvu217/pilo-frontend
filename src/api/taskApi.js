@@ -12,6 +12,17 @@ const taskApi = {
       tasks: tasks,
     };
   },
+  async getAllByUserId(userId) {
+    const url = `/api/tasks/getAllByUserId/${userId}`;
+    const tasks = await axiosClient.get(url, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+    return {
+      tasks: tasks,
+    };
+  },
   get(id) {
     const url = `/api/tasks/${id}`;
     return axiosClient.get(url, {
@@ -20,8 +31,8 @@ const taskApi = {
       },
     });
   },
-  create(data, listId) {
-    const url = `/api/tasks/${listId}`;
+  create(data, projectId, listId, projectName) {
+    const url = `/api/tasks/${projectId}/${listId}/${projectName}`;
     return axiosClient.post(url, data, {
       headers: {
         authorization: `${token}`,
@@ -87,14 +98,19 @@ const taskApi = {
       },
     });
   },
-  editTaskDescription(taskId, formData) {
-    const { description } = formData;
-    const url = `/api/tasks/edit/${taskId}`;
-    return axiosClient.patch(url, formData, {
-      headers: {
-        authorization: `${token}`,
+  editTaskDescription(formData, taskId) {
+    const url = `/api/tasks/edit/description/${taskId}`;
+    return axiosClient.patch(
+      url,
+      {
+        description: formData,
       },
-    });
+      {
+        headers: {
+          authorization: `${token}`,
+        },
+      }
+    );
   },
   deleteTask(listId, taskId) {
     const url = `/api/tasks/delete/${listId}/${taskId}`;

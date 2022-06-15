@@ -30,8 +30,6 @@ function EditDuAnModal() {
     resolver: yupResolver(schema),
   });
   const { project, loading } = useProjectDetail(projectId.id);
-  const start_date = moment(new Date(project.start_date)).format("YYYY-MM-DD");
-  const end_date = moment(new Date(project.end_date)).format("YYYY-MM-DD");
   const onProjectSubmit = async (values) => {
     try {
       const projectData = await projectApi.create(values);
@@ -96,33 +94,25 @@ function EditDuAnModal() {
                 />
               </div>
 
-              <div className="date-range mt-3 flex flex-row justify-between">
-                <div>
-                  <span className="label-text text-black font-semibold block mb-2 mt-1">
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div className="flex flex-col">
+                  <span className="label-text text-black font-semibold block">
                     Ngày bắt đầu
                   </span>
                   <input
-                    className="input font-medium bg-white  text-black rounded-lg py-4 border-2 border-gray-300"
+                    className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
                     type="date"
                     {...register("start_date")}
-                    value={start_date}
-                    placeholder="Ngày bắt đầu"
                   />
                 </div>
-                <ArrowNarrowRightIcon className="w-8 h-8 text-gray-300 mt-10" />
-
-                <div>
-                  <span className="label-text text-black font-semibold block mb-2 mt-1">
+                <div className="flex flex-col">
+                  <span className="label-text text-black font-semibold block">
                     Ngày kết thúc
                   </span>
                   <input
-                    className={
-                      "input font-medium bg-white  text-black rounded-lg py-4 border-2 border-gray-300"
-                    }
+                    className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
                     type="date"
                     {...register("end_date")}
-                    value={end_date}
-                    placeholder="Ngày kết thúc"
                   />
                 </div>
               </div>
@@ -159,7 +149,7 @@ function EditDuAnModal() {
                   {...register("thumbnail")}
                 />
               </div>
-              <ThanhVien members={project.members} />
+              {/* <ThanhVien members={project.members} /> */}
               <div className="flex justify-center mx-auto">
                 {isSubmitting && <ThreeDotsWave />}
               </div>

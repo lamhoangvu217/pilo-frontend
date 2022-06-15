@@ -6,11 +6,8 @@ import {
   XIcon,
   InformationCircleIcon,
 } from "@heroicons/react/outline";
-import { useParams } from "react-router-dom";
-import AssignPeople from "../../../../../congviec/AssignPeople";
 import Checklist from "../../../../../congviec/Checklist";
 import { getTask } from "redux/actions/tasks";
-import useTaskDetail from "hooks/useTaskDetail";
 import useProjectDetail from "hooks/useProjectDetail";
 import taskApi from "api/taskApi";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,18 +19,19 @@ import ThreeDotsWave from "components/loading/ThreeDotsWave";
 import Moment from "react-moment";
 import { addTaskMember, deleteTask, getTasks } from "redux/actions/tasks";
 import { editTaskDescription } from "redux/actions/tasks";
+import { useLayoutEffect } from "react";
 const schema = yup.object().shape({
   name: yup.string(),
   description: yup.string(),
-  duedate: yup.date(),
+  start_date: yup.date(),
+  end_date: yup.date(),
   progress: yup.number(),
 });
 function CongViecDetailModal({
   taskId,
   closeTaskDetailModal,
-  taskDetailOpen,
-  setTaskDetailOpen,
   listId,
+  projectId,
 }) {
   const {
     register,
@@ -42,24 +40,40 @@ function CongViecDetailModal({
   } = useForm({
     resolver: yupResolver(schema),
   });
-  // const [add, setAdd] = useState(true);
   const dispatch = useDispatch();
-  const loggedInUser = useSelector((state) => state.user.current);
   const [editMode, setEditMode] = useState(false);
 
   const task = useSelector((state) => state.task.task);
-  const [newDescription, setNewDescription] = useState(task.description);
+  // const [newDescription, setNewDescription] = useState("");
   const members = task.members.map((member) => member.user);
   useEffect(() => {
     dispatch(getTask(taskId));
-    dispatch(getTasks(listId));
   }, [dispatch]);
 
-  const isLoggedIn = !!loggedInUser.id;
-  const userId = loggedInUser.id;
-  const projectId = useParams();
-  // const { task } = useTaskDetail(taskId);
-  const { project, loading } = useProjectDetail(projectId.id);
+  const [totalChecked, setTotalChecked] = useState([]);
+  useEffect(() => {
+    setTotalChecked(
+      task.checklists.filter((checklist) => checklist.complete === true)
+    );
+  }, []);
+
+  useEffect(() => {
+    if (totalChecked.length === task.checklists.length) {
+      const handleChecklistDone = async () => {
+        const progressData = await taskApi.updateProgress(100, taskId);
+        dispatch(getTask(taskId));
+      };
+      handleChecklistDone()
+    } else {
+      const handleChecklistNormal = async () => {
+        const progressData = await taskApi.updateProgress(0, taskId);
+        dispatch(getTask(taskId));
+      };
+      handleChecklistNormal()
+    }
+  }, []);
+
+  const { project, loading } = useProjectDetail(projectId);
   const handleAddMember = async (e) => {
     dispatch(
       addTaskMember({
@@ -79,21 +93,31 @@ function CongViecDetailModal({
       icon: "👏",
     });
   };
-  const onDescriptionSubmit = (e) => {
-    e.preventDefault();
-    dispatch(editTaskDescription(taskId, { newDescription }));
-    setEditMode(false);
-    toast.success("Cập nhật mô tả thành công!", {
-      duration: 2000,
-      position: "top-right",
-      className: "bg-green-500 text-white",
-      icon: "👏",
-    });
-  };
+  // const onDescriptionSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const descriptionData = await taskApi.editTaskDescription(
+  //       newDescription,
+  //       taskId
+  //     );
+  //     setEditMode(false);
+  //     toast.success("Cập nhật mô tả thành công!", {
+  //       duration: 2000,
+  //       position: "top-right",
+  //     });
+  //   } catch (error) {
+  //     toast.error("Cập nhật mô tả không thành công!", {
+  //       duration: 2000,
+  //       position: "top-right",
+  //     });
+  //   }
+  // };
   const handleProgress = async (value) => {
     try {
       const progressData = await taskApi.updateProgress(value, taskId);
       dispatch(getTask(taskId));
+      console.log(value)
       toast.success("Cập nhật tiến độ thành công!", {
         duration: 2000,
         position: "top-right",
@@ -104,10 +128,10 @@ function CongViecDetailModal({
       console.log(error);
     }
   };
-  const handleDescription = (e) => {
-    setNewDescription(e.target.value);
-    setEditMode(true);
-  };
+  // const handleDescription = (e) => {
+  //   setNewDescription(e.target.value);
+  //   setEditMode(true);
+  // };
   let admin;
   if (loading) {
     admin = "";
@@ -115,7 +139,7 @@ function CongViecDetailModal({
     admin = (
       <span className="">
         {project.members.map((member) => {
-          if (member.role == "admin") {
+          if (member.role === "admin") {
             return (
               <p className="font-semibold text-[#d63031] text-sm">
                 {member.email}
@@ -128,6 +152,37 @@ function CongViecDetailModal({
       </span>
     );
   }
+  var user = localStorage.getItem("user");
+  var userObject = JSON.parse(user);
+  var userId = userObject.id;
+  var assignTaskStatus = false;
+  var deleteTaskStatus = false;
+  var identify = "";
+  if (loading) {
+    return "";
+  } else {
+    const normalRole = project.members.filter((e) => e.role === "normal");
+    if (normalRole.some((e) => e.user === userId)) {
+      identify = "member";
+    } else {
+      identify = "admin";
+    }
+  }
+  if (identify === "admin") {
+    assignTaskStatus = false;
+  } else if (identify === "member") {
+    if (project.permissions.includes("assignTask")) {
+      assignTaskStatus = false;
+    } else {
+      assignTaskStatus = true;
+    }
+    if (project.permissions.includes("deleteTask")) {
+      deleteTaskStatus = false;
+    } else {
+      deleteTaskStatus = true;
+    }
+  }
+
   if (loading) {
     return "";
   }
@@ -211,7 +266,11 @@ function CongViecDetailModal({
               </div>
               <div className="flex flex-row items-center">
                 <div>
-                  <button onClick={handleDelete} className="btn btn-error text-white mr-4">
+                  <button
+                    onClick={handleDelete}
+                    className="btn btn-error text-white mr-4 disabled:text-gray-500"
+                    disabled={deleteTaskStatus}
+                  >
                     Delete
                   </button>
                 </div>
@@ -243,26 +302,38 @@ function CongViecDetailModal({
               </span>
               <div>{admin}</div>
             </div>
-            <div className="flex flex-row items-center mt-4">
-              <span className="text-black block mr-2 text-sm">
-                Hạn hoàn thành:
-              </span>
-              <div className="text-red-500 font-bold">
-                <Moment format="DD/MM/YYYY">{task.duedate}</Moment>
+            <div className="flex flex-row justify-between border-t-[1px] border-b-[1px] border-gray-300 my-3">
+              <div className="flex flex-row items-center px-2 py-2">
+                <span className="text-black block mr-2 text-sm">
+                  Ngày bắt đầu:
+                </span>
+                <div className="text-red-500 font-bold">
+                  <Moment format="DD/MM/YYYY">{task.start_date}</Moment>
+                </div>
+              </div>
+              <div className="flex flex-row items-center px-2 py-2">
+                <span className="text-black block mr-2 text-sm">
+                  Ngày kết thúc
+                </span>
+                <div className="text-red-500 font-bold">
+                  <Moment format="DD/MM/YYYY">{task.end_date}</Moment>
+                </div>
               </div>
             </div>
+
             <div className="grid grid-cols-2 mt-3">
               <div>
                 <span className="label-text text-black text-md font-bold">
                   Người thực hiện
                 </span>
                 {project.members?.map((member) => {
-                  return member.role == "normal" ? (
+                  return member.role === "normal" ? (
                     <div className="relative flex items-start">
                       <div className="flex items-center h-5">
                         <input
                           name={`${member.user}`}
                           type="checkbox"
+                          disabled={assignTaskStatus}
                           checked={members.indexOf(member.user) !== -1}
                           // onChange={(e) => handleAddMember(e.target.checked)}
                           onChange={handleAddMember}
@@ -284,34 +355,35 @@ function CongViecDetailModal({
                 })}
               </div>
             </div>
-            <form onSubmit={(e) => onDescriptionSubmit(e)}>
-              <div className="mt-5">
-                <div className="flex flex-row items-center mb-2">
-                  <InformationCircleIcon className="w-4 h-4 text-black" />
-                  <span className="text-black block ml-1 label-text text-md font-bold">
-                    Mô tả
-                  </span>
-                </div>
 
-                <textarea
-                  rows={4}
-                  name="comment"
-                  id="comment"
-                  className="text-black shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  value={newDescription}
-                  onChange={handleDescription}
-                />
+            <div className="mt-5">
+              <div className="flex flex-row items-center mb-2">
+                <InformationCircleIcon className="w-4 h-4 text-black" />
+                <span className="text-black block ml-1 label-text text-md font-bold">
+                  Mô tả
+                </span>
               </div>
-              <div className="mt-4">
-                <button
-                  type="submit"
-                  className="btn btn-primary mr-2 disabled:text-gray-400"
-                  disabled={!editMode}
-                >
-                  Sửa mô tả
-                </button>
-              </div>
-            </form>
+
+              <textarea
+                rows={4}
+                name="comment"
+                id="comment"
+                className="text-black shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                value={task.description}
+                disabled
+                // onChange={handleDescription}
+              />
+            </div>
+            {/* <div className="mt-4">
+              <button
+                type="button"
+                className="btn btn-primary mr-2 disabled:text-gray-400"
+                disabled={!editMode}
+                // onClick={onDescriptionSubmit}
+              >
+                Sửa mô tả
+              </button>
+            </div> */}
 
             <div className="checklist mt-5">
               <Checklist task={task} loading={loading} />

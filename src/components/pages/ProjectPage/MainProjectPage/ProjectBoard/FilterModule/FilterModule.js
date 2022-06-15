@@ -1,4 +1,5 @@
 import React from "react";
+import AttachedFilesModule from "../AttachedFiles/AttachedFilesModule";
 import AddGroupCongViec from "../GroupCongViecModule/AddGroupCongViec";
 import ViewProjectDetail from "../ProjectDetail/ViewProjectDetail";
 import FilterDoneStatus from "./FilterDoneStatus";
@@ -12,8 +13,10 @@ function FilterModule() {
         <FilterDoneStatus /> */}
       </div>
       <div className="flex flex-row  items-center justify-start">
+        
         <AddGroupCongViec />
         <ViewProjectDetail />
+        <AttachedFilesModule />
       </div>
     </div>
   );

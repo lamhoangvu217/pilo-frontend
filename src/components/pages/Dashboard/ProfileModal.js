@@ -7,6 +7,7 @@ import { logout } from "redux/reducers/auth/userSlice";
 import useUserDetail from "hooks/useUserDetail";
 
 import jwt_decode from "jwt-decode";
+import { Link } from "react-router-dom";
 function ProfileModal() {
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.user.current);
@@ -72,9 +73,16 @@ function ProfileModal() {
             </div>
             <div className="flex flex-col justify-center items-start px-3 py-4">
               <div className="flex flex-row items-center py-3 px-3 hover:bg-gray-200 hover:rounded-md w-full">
-                <KeyIcon className="w-5 h-5 text-gray-500" />
-                <span className="text-black ml-2 text-sm">Đổi mật khẩu</span>
+                <Link to="/forgetPassword">
+                  <div className="flex flex-row">
+                    <KeyIcon className="w-5 h-5 text-gray-500" />
+                    <span className="text-black ml-2 text-sm">
+                      Đổi mật khẩu
+                    </span>
+                  </div>
+                </Link>
               </div>
+
               <div className="flex flex-row items-center py-3 px-3 hover:bg-gray-200 hover:rounded-md w-full">
                 <UserCircleIcon className="w-5 h-5 text-gray-500" />
                 <span className="text-black ml-2 text-sm">

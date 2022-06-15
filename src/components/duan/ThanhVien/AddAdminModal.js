@@ -6,13 +6,12 @@ import { useParams } from "react-router-dom";
 import useUserList from "hooks/useUserList";
 import projectApi from "api/projectApi";
 import toast, { Toaster } from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { getProject } from "redux/actions/project";
-
+import { getProject } from "redux/actions/project"
+import { useSelector, useDispatch, createDispatchHook } from "react-redux"
 const animatedComponents = makeAnimated();
 
-function AddMemModal() {
-  const dispatch = useDispatch();
+function AddAdminModal() {
+    const dispatch = useDispatch();
   const { userList, loading } = useUserList();
   const [memberId, setMemberId] = useState("");
   const projectId = useParams();
@@ -28,7 +27,7 @@ function AddMemModal() {
   }, [dispatch])
   const handleAddMember = async () => {
     try {
-      const memberData = await projectApi.addMember(memberId, projectIdHandler);
+      const memberData = await projectApi.addAdmin(memberId, projectIdHandler);
       dispatch(getProject(projectIdHandler))
       toast.success("Thêm thành viên thành công!", {
         duration: 2000,
@@ -69,10 +68,10 @@ function AddMemModal() {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <div className="inline-block fixed border-2 border-gray-300 w-full h-96 max-w-md overflow-hidden text-left align-middle transition-all transform bg-[#2c3e50] shadow-xl rounded-md">
+        <div className="inline-block fixed border-2 border-gray-300 w-full h-96 max-w-md overflow-hidden text-left align-middle transition-all transform bg-[#e74c3c] shadow-xl rounded-md">
           <div className="px-[30px] py-[25px]">
             <h1 className="text-xl text-white font-bold">
-              Thêm thành viên vào dự án
+              Thêm người quản lý dự án
             </h1>
             <hr className="mt-3 mb-3" />
 
@@ -105,4 +104,4 @@ function AddMemModal() {
   );
 }
 
-export default AddMemModal;
+export default AddAdminModal;

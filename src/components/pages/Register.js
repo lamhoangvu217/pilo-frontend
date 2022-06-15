@@ -63,7 +63,7 @@ const Register = () => {
     <>
       <MetaTitle title="Đăng ký tài khoản - Pilo" />
 
-      <div className="h-screen bg-white flex items-start pt-20 justify-center  px-4 sm:px-6 lg:px-8">
+      <div className="h-screen bg-white flex items-start pt-12 justify-center  px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <Toaster />
           <div>
@@ -89,10 +89,10 @@ const Register = () => {
                   username
                 </label>
                 <input
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-4 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-xl"
                   placeholder="Tên của bạn"
                   {...register("username")}
+                  type="text"
                 />
               </div>
               <div>
@@ -100,9 +100,10 @@ const Register = () => {
                   Email address
                 </label>
                 <input
-                  autoComplete="email"
+                  autoComplete="on"
                   {...register("email")}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  type="email"
+                  className="appearance-none rounded-none relative block w-full px-4 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-xl"
                   placeholder="Địa chỉ email"
                 />
               </div>
@@ -114,7 +115,7 @@ const Register = () => {
                   type="password"
                   autoComplete="current-password"
                   {...register("password")}
-                  className="appearance-none  rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none  rounded-none relative block w-full px-4 py-4 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-xl"
                   placeholder="Mật khẩu"
                 />
               </div>
@@ -125,7 +126,7 @@ const Register = () => {
                 <input
                   type="text"
                   {...register("position")}
-                  className="appearance-none  rounded-b-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none  rounded-b-md relative block w-full px-4 py-4 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-xl"
                   placeholder="Chức vụ tại công ty"
                 />
               </div>
@@ -163,7 +164,7 @@ const Register = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="group disabled:opacity-75 disabled:bg-gray-400 relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group disabled:opacity-75 disabled:bg-gray-400 relative w-full flex justify-center py-4 px-4 border border-transparent text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Đăng ký
             </button>

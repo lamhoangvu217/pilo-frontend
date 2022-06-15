@@ -102,7 +102,7 @@ const Login = () => {
                   type="email"
                   autoComplete="email"
                   {...register("email")}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-4 py-6 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-xl"
                   placeholder="Email address"
                 />
               </div>
@@ -114,7 +114,7 @@ const Login = () => {
                   type="password"
                   {...register("password")}
                   autoComplete="current-password"
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-4 py-6 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-xl"
                   placeholder="Password"
                 />
               </div>
@@ -135,12 +135,11 @@ const Login = () => {
                 </label>
               </div>
               <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Bạn quên mật khẩu
-                </a>
+                <Link to="/verifyEmail">
+                  <span className="font-medium text-indigo-600 hover:text-indigo-500">
+                    Bạn quên mật khẩu
+                  </span>
+                </Link>
               </div>
             </div>
             <div className="flex justify-center mx-auto">
@@ -164,7 +163,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="group disabled:opacity-75 disabled:bg-gray-400 relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group disabled:opacity-75 disabled:bg-gray-400 relative w-full flex justify-center py-4 px-4 border border-transparent text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Đăng nhập
             </button>
