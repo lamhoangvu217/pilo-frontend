@@ -253,7 +253,7 @@ function ProjectDetailModal({ setViewProjectOpen }) {
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={closeDuAnModal}
         >
-          <EditDuAnModal />
+          <EditDuAnModal project={project} />
         </Dialog>
       </Transition>
       <Transition appear show={quanlythanhvienOpen} as={Fragment}>

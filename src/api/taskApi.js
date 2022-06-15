@@ -98,19 +98,13 @@ const taskApi = {
       },
     });
   },
-  editTaskDescription(formData, taskId) {
-    const url = `/api/tasks/edit/description/${taskId}`;
-    return axiosClient.patch(
-      url,
-      {
-        description: formData,
+  editTask(data, id) {
+    const url = `/api/tasks/${id}`;
+    return axiosClient.patch(url, data, {
+      headers: {
+        authorization: `${token}`,
       },
-      {
-        headers: {
-          authorization: `${token}`,
-        },
-      }
-    );
+    });
   },
   deleteTask(listId, taskId) {
     const url = `/api/tasks/delete/${listId}/${taskId}`;

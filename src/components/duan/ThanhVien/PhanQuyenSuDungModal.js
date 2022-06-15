@@ -248,6 +248,35 @@ function PhanQuyenSuDungModal() {
                                 />
                               </td>
                             </tr>
+                            <tr>
+                              <td
+                                colSpan={3}
+                                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                              >
+                                <div className="flex flex-col">
+                                  <span className="text-base font-medium">
+                                    Chỉnh sửa công việc
+                                  </span>
+                                  <span className="text-xs font-normal text-gray-500">
+                                    Quyền chỉnh sửa tên và mô tả công việc
+                                  </span>
+                                </div>
+                              </td>
+                              <td className="text-left pl-8">
+                                <input type="checkbox" checked disabled />
+                              </td>
+                              <td className="text-left pl-10">
+                                <input
+                                  type="checkbox"
+                                  name="editTask"
+                                  id="editTask"
+                                  onChange={handleCheck}
+                                  defaultChecked={project.permissions.includes(
+                                    "editTask"
+                                  )}
+                                />
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>

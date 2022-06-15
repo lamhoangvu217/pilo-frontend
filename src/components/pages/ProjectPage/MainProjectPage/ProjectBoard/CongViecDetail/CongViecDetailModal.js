@@ -33,6 +33,7 @@ function CongViecDetailModal({
   listId,
   projectId,
 }) {
+  const task = useSelector((state) => state.task.task);
   const {
     register,
     handleSubmit,
@@ -40,38 +41,56 @@ function CongViecDetailModal({
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const {
+    register: register2,
+    handleSubmit: handleSubmit2,
+    formState: { isSubmitting: isSubmitting2 },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: task.name,
+      description: task.description,
+    },
+  });
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
 
-  const task = useSelector((state) => state.task.task);
   // const [newDescription, setNewDescription] = useState("");
   const members = task.members.map((member) => member.user);
   useEffect(() => {
     dispatch(getTask(taskId));
   }, [dispatch]);
+  const [taskName, setTaskName] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
+  // const [totalChecked, setTotalChecked] = useState([]);
+  // useEffect(() => {
+  //   setTotalChecked(
+  //     task.checklists.filter((checklist) => checklist.complete === true)
+  //   );
+  // }, []);
 
-  const [totalChecked, setTotalChecked] = useState([]);
-  useEffect(() => {
-    setTotalChecked(
-      task.checklists.filter((checklist) => checklist.complete === true)
-    );
-  }, []);
+  // useEffect(() => {
+  //   if (totalChecked.length === task.checklists.length) {
+  //     const handleChecklistDone = async () => {
+  //       const percent = {
+  //         progress: 100
+  //       }
+  //       const progressData = await taskApi.updateProgress(percent, taskId);
+  //       dispatch(getTask(taskId));
+  //     };
+  //     handleChecklistDone();
+  //   } else {
+  //     const handleChecklistNormal = async () => {
+  //       const percent = {
+  //         progress: 0
+  //       }
+  //       const progressData = await taskApi.updateProgress(percent, taskId);
+  //       dispatch(getTask(taskId));
 
-  useEffect(() => {
-    if (totalChecked.length === task.checklists.length) {
-      const handleChecklistDone = async () => {
-        const progressData = await taskApi.updateProgress(100, taskId);
-        dispatch(getTask(taskId));
-      };
-      handleChecklistDone()
-    } else {
-      const handleChecklistNormal = async () => {
-        const progressData = await taskApi.updateProgress(0, taskId);
-        dispatch(getTask(taskId));
-      };
-      handleChecklistNormal()
-    }
-  }, []);
+  //     };
+  //     handleChecklistNormal();
+  //   }
+  // }, [dispatch]);
 
   const { project, loading } = useProjectDetail(projectId);
   const handleAddMember = async (e) => {
@@ -83,6 +102,17 @@ function CongViecDetailModal({
       })
     );
   };
+  const handleUpdate = async (values) => {
+    try {
+      const updateTask = await taskApi.editTask(values, taskId);
+      toast.success("Cập nhật công việc thành công!", {
+        duration: 2000,
+        position: "top-right",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleDelete = async () => {
     dispatch(deleteTask(listId, taskId));
     dispatch(getTasks(listId));
@@ -93,6 +123,15 @@ function CongViecDetailModal({
       icon: "👏",
     });
   };
+  const handleNameEdit = (e) => {
+    setTaskName(e.target.value)
+    setEditMode(true);
+  };
+  const handleDescriptionEdit = (e) => {
+    setTaskDescription(e.target.value)
+    setEditMode(true);
+  };
+
   // const onDescriptionSubmit = async (e) => {
   //   e.preventDefault();
 
@@ -117,7 +156,6 @@ function CongViecDetailModal({
     try {
       const progressData = await taskApi.updateProgress(value, taskId);
       dispatch(getTask(taskId));
-      console.log(value)
       toast.success("Cập nhật tiến độ thành công!", {
         duration: 2000,
         position: "top-right",
@@ -157,6 +195,7 @@ function CongViecDetailModal({
   var userId = userObject.id;
   var assignTaskStatus = false;
   var deleteTaskStatus = false;
+  var editTaskStatus = false;
   var identify = "";
   if (loading) {
     return "";
@@ -180,6 +219,11 @@ function CongViecDetailModal({
       deleteTaskStatus = false;
     } else {
       deleteTaskStatus = true;
+    }
+    if (project.permissions.includes("editTask")) {
+      editTaskStatus = false;
+    } else {
+      editTaskStatus = true;
     }
   }
 
@@ -241,7 +285,7 @@ function CongViecDetailModal({
                     <div className="mt-3">
                       <ProgressBar labelSize="12px" completed={task.progress} />
                     </div>
-                    <form onSubmit={handleSubmit(handleProgress)}>
+                    <form key={1} onSubmit={handleSubmit(handleProgress)}>
                       <div className="mt-3 flex flex-row items-center">
                         <input
                           type="text"
@@ -281,21 +325,49 @@ function CongViecDetailModal({
             </div>
 
             <hr className="mt-6 mb-3" />
+            <form key={2} onSubmit={handleSubmit2(handleUpdate)}>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-black text-md font-bold">
+                    Tên công việc
+                  </span>
+                </label>
+                <input
+                  placeholder="nhập tên nhóm công việc"
+                  disabled={editTaskStatus}
+                  className="input disabled:bg-gray-300 disabled:border-0 disabled:text-gray-400 bg-white text-black border-gray-300 border-2"
+                  name="name"
+                  type="text"
+                  {...register2("name", {
+                    onChange: handleNameEdit,
+                  })}
+                />
+              </div>
+              <div className="mt-5">
+                <div className="flex flex-row items-center mb-2">
+                  <InformationCircleIcon className="w-4 h-4 text-black" />
+                  <span className="text-black block ml-1 label-text text-md font-bold">
+                    Mô tả
+                  </span>
+                </div>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-black text-md font-bold">
-                  Tên công việc
-                </span>
-              </label>
-              <input
-                placeholder="nhập tên nhóm công việc"
-                value={`${task.name}`}
-                disabled
-                className="input disabled:bg-gray-300 disabled:border-0 disabled:text-gray-400 bg-white text-black border-gray-300 border-2"
-                type="text"
-              />
-            </div>
+                <textarea
+                  rows={4}
+                  className="text-black disabled:bg-gray-300 disabled:border-0 disabled:text-gray-400 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                  disabled={editTaskStatus}
+                  name="description"
+                  {...register2("description", {
+                    onChange: handleDescriptionEdit,
+                  })}
+                />
+              </div>
+              {/* <div className="flex justify-center mx-auto">
+                {isSubmitting && <ThreeDotsWave />}
+              </div> */}
+              <button type="submit"   className={editMode ? "btn btn-warning mt-2" : "hidden"} >
+                Lưu thay đổi
+              </button>
+            </form>
             <div className="mt-3 flex flex-row">
               <span className="text-black block mr-2 text-sm">
                 Người giao việc:
@@ -356,24 +428,6 @@ function CongViecDetailModal({
               </div>
             </div>
 
-            <div className="mt-5">
-              <div className="flex flex-row items-center mb-2">
-                <InformationCircleIcon className="w-4 h-4 text-black" />
-                <span className="text-black block ml-1 label-text text-md font-bold">
-                  Mô tả
-                </span>
-              </div>
-
-              <textarea
-                rows={4}
-                name="comment"
-                id="comment"
-                className="text-black shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                value={task.description}
-                disabled
-                // onChange={handleDescription}
-              />
-            </div>
             {/* <div className="mt-4">
               <button
                 type="button"

@@ -1,6 +1,5 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import ThanhVien from "./ThanhVien";
 import projectApi from "api/projectApi";
 import toast, { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -8,10 +7,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Moment from "react-moment";
 import ThreeDotsWave from "components/loading/ThreeDotsWave";
-import { ArrowNarrowRightIcon } from "@heroicons/react/solid";
 import useProjectDetail from "hooks/useProjectDetail";
 import { useParams } from "react-router-dom";
 import moment from "moment";
+import { useEffect } from "react";
 const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập tên của bạn"),
   description: yup.string().required("Vui lòng nhập chức vụ của bạn"),
@@ -20,7 +19,7 @@ const schema = yup.object().shape({
   thumbnail: yup.string().required("Vui lòng nhập link ảnh thumbnail"),
 });
 
-function EditDuAnModal() {
+function EditDuAnModal({ project }) {
   const projectId = useParams();
   const {
     register,
@@ -28,24 +27,30 @@ function EditDuAnModal() {
     formState: { isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      name: project.name,
+      start_date: moment(project.start_date).format("YYYY-MM-DD"),
+      end_date: moment(project.end_date).format("YYYY-MM-DD"),
+      thumbnail: project.thumbnail,
+      description: project.description
+    }
   });
-  const { project, loading } = useProjectDetail(projectId.id);
+  const [projectName, setProjectName] = useState("")
+  const [description, setDescription] = useState("")
+  const [thumbnail, setThumbnail] = useState("")
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
   const onProjectSubmit = async (values) => {
     try {
-      const projectData = await projectApi.create(values);
-      toast.success("Tạo dự án thành công!", {
+      const projectData = await projectApi.edit(values, project.id);
+      toast.success("Sửa dự án thành công!", {
         duration: 2000,
         position: "top-right",
-        className: "bg-green-500 text-white",
-        icon: "👏",
       });
     } catch (error) {
       console.log(error);
     }
   };
-  if (loading) {
-    return "";
-  }
   return (
     <div className="min-h-screen px-4 text-center">
       <Toaster />
@@ -89,8 +94,8 @@ function EditDuAnModal() {
                   placeholder="nhập tên dự án"
                   className="input  bg-white text-black border-gray-300 border-2"
                   type="text"
-                  value={project.name}
-                  {...register("name")}
+                  name="name"
+                  {...register("name", { onChange: (e) => setProjectName(e.target.value)})}
                 />
               </div>
 
@@ -102,9 +107,10 @@ function EditDuAnModal() {
                   <input
                     className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
                     type="date"
-                    {...register("start_date")}
+                    {...register("start_date", { onChange: (e) => setStartDate(e.target.value)})}
+                    name="start_date"
                   />
-                </div>
+                </div>  
                 <div className="flex flex-col">
                   <span className="label-text text-black font-semibold block">
                     Ngày kết thúc
@@ -112,7 +118,8 @@ function EditDuAnModal() {
                   <input
                     className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
                     type="date"
-                    {...register("end_date")}
+                    name="end_date"
+                    {...register("end_date", { onChange: (e) => setEndDate(e.target.value)})}
                   />
                 </div>
               </div>
@@ -125,9 +132,8 @@ function EditDuAnModal() {
                 <textarea
                   className="textarea h-24  bg-white text-black border-gray-300 border-2"
                   placeholder="nhập thông tin bổ sung"
-                  defaultValue={""}
-                  {...register("description")}
-                  value={project.description}
+                  name="description"
+                  {...register("description", { onChange: (e) => setDescription(e.target.value)})}
                 />
               </div>
               <div className="form-control mt-4">
@@ -145,8 +151,8 @@ function EditDuAnModal() {
                   placeholder="nhập link thumbnail"
                   className="input  bg-white text-black border-gray-300 border-2"
                   type="text"
-                  value={project.thumbnail}
-                  {...register("thumbnail")}
+                  name="thumbnail"
+                  {...register("thumbnail", { onChange: (e) => setThumbnail(e.target.value)})}
                 />
               </div>
               {/* <ThanhVien members={project.members} /> */}

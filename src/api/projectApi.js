@@ -28,6 +28,14 @@ const projectApi = {
       },
     });
   },
+  edit(data, id) {
+    const url = `/api/projects/${id}`;
+    return axiosClient.patch(url, data, {
+      headers: {
+        authorization: `${token}`,
+      },
+    })
+  },
   remove(id) {
     const url = `/api/projects/${id}`;
     return axiosClient.delete(url, {
