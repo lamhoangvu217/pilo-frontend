@@ -18,20 +18,20 @@ import * as yup from "yup";
 import ThreeDotsWave from "components/loading/ThreeDotsWave";
 import Moment from "react-moment";
 import { addTaskMember, deleteTask, getTasks } from "redux/actions/tasks";
-import { editTaskDescription } from "redux/actions/tasks";
-import { useLayoutEffect } from "react";
 const schema = yup.object().shape({
+  progress: yup.number(),
+});
+const schema2 = yup.object().shape({
   name: yup.string(),
   description: yup.string(),
-  start_date: yup.date(),
-  end_date: yup.date(),
-  progress: yup.number(),
 });
 function CongViecDetailModal({
   taskId,
   closeTaskDetailModal,
   listId,
   projectId,
+  taskDetailOpen,
+  setTaskDetailOpen
 }) {
   const task = useSelector((state) => state.task.task);
   const {
@@ -46,11 +46,11 @@ function CongViecDetailModal({
     handleSubmit: handleSubmit2,
     formState: { isSubmitting: isSubmitting2 },
   } = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      name: task.name,
-      description: task.description,
-    },
+    resolver: yupResolver(schema2),
+    // defaultValues: {
+    //   name: task.name,
+    //   description: task.description,
+    // },
   });
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
@@ -122,13 +122,14 @@ function CongViecDetailModal({
       className: "bg-green-500 text-white",
       icon: "👏",
     });
+    window.location.reload();
   };
   const handleNameEdit = (e) => {
-    setTaskName(e.target.value)
+    setTaskName(e.target.value);
     setEditMode(true);
   };
   const handleDescriptionEdit = (e) => {
-    setTaskDescription(e.target.value)
+    setTaskDescription(e.target.value);
     setEditMode(true);
   };
 
@@ -333,7 +334,7 @@ function CongViecDetailModal({
                   </span>
                 </label>
                 <input
-                  placeholder="nhập tên nhóm công việc"
+                  placeholder={task.name}
                   disabled={editTaskStatus}
                   className="input disabled:bg-gray-300 disabled:border-0 disabled:text-gray-400 bg-white text-black border-gray-300 border-2"
                   name="name"
@@ -356,6 +357,7 @@ function CongViecDetailModal({
                   className="text-black disabled:bg-gray-300 disabled:border-0 disabled:text-gray-400 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                   disabled={editTaskStatus}
                   name="description"
+                  placeholder={task.description}
                   {...register2("description", {
                     onChange: handleDescriptionEdit,
                   })}
@@ -364,7 +366,10 @@ function CongViecDetailModal({
               {/* <div className="flex justify-center mx-auto">
                 {isSubmitting && <ThreeDotsWave />}
               </div> */}
-              <button type="submit"   className={editMode ? "btn btn-warning mt-2" : "hidden"} >
+              <button
+                type="submit"
+                className={editMode ? "btn btn-warning mt-2" : "hidden"}
+              >
                 Lưu thay đổi
               </button>
             </form>

@@ -212,7 +212,7 @@ function ProjectDetailModal({ setViewProjectOpen }) {
                               {project.end_date}
                             </Moment>
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <td className="whitespace-nowrap px-3 py-4 truncate max-w-xs text-sm text-gray-500">
                             {project.description}
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">

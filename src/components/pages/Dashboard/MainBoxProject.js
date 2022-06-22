@@ -8,7 +8,6 @@ function MainBoxProject() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProjects());
-    
   }, [dispatch]);
   if (projects === []) {
     return (
@@ -20,7 +19,7 @@ function MainBoxProject() {
         <hr />
         <div className="mainbox_list w-full flex flex-col items-center justify-center">
           {projects?.map((project) => (
-            <Link to={`/project/${project.id}`}>
+            <a href={`/project/${project.id}`}>
               <div
                 key={project.id}
                 className=" w-56 py-3 px-4  border-0 flex flex-row items-center bg-violet-600 hover:bg-violet-700 rounded-xl cursor-pointer justify-start mt-3"
@@ -34,7 +33,7 @@ function MainBoxProject() {
                   {project.name}
                 </span>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

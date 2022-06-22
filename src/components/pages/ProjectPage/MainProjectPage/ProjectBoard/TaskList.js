@@ -12,7 +12,6 @@ import useProjectDetail from "hooks/useProjectDetail";
 function TaskList() {
   let [addJobOpen, setAddJobOpen] = useState(false);
   const projectId = useParams();
-
   const projectIdFormat = projectId.id;
   const [width, height] = useWindowSize();
   const [listId, setListId] = useState("");
@@ -26,7 +25,6 @@ function TaskList() {
     setAddJobOpen(true);
   }
 
-  const index = 0;
   const tasks = useSelector((state) => state.task.tasks);
   const lists = useSelector((state) => state.list.lists);
   const dispatch = useDispatch();
@@ -167,12 +165,12 @@ function TaskList() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {tasks?.map((task) => (
+                {tasks?.map((task, index) => (
                   <TaskItem
                     task={task}
                     listId={listId}
                     listName={listName}
-                    index={index + 1}
+                    index={index}
                   />
                 ))}
                 {addTaskButton}

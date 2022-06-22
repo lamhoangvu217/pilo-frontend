@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getTask } from "redux/actions/tasks";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { useParams } from "react-router-dom";
-function TaskItem({ task, index, listName, listId }) {
+function TaskItem({ task, listName, listId, index }) {
   let [taskDetailOpen, setTaskDetailOpen] = useState(false);
   const projectId = useParams();
   const projectIdFormat = projectId.id
@@ -28,7 +28,7 @@ function TaskItem({ task, index, listName, listId }) {
         onClick={openTaskDetailModal}
       >
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-          {index}
+          {index + 1}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
           {task.name}
@@ -47,8 +47,10 @@ function TaskItem({ task, index, listName, listId }) {
             "Chưa hoàn thành"
           )}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          <Moment format="DD/MM/YYYY">{task.duedate}</Moment>
+        <td className="flex flex-row  px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          <Moment format="DD/MM/YYYY">{task.start_date}</Moment>
+          <span className="block"> - </span>
+          <Moment format="DD/MM/YYYY">{task.end_date}</Moment>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
           <div className="flex flex-col">
@@ -70,6 +72,7 @@ function TaskItem({ task, index, listName, listId }) {
             projectId={projectIdFormat}
             closeTaskDetailModal={closeTaskDetailModal}
             task={task}
+            taskDetailOpen={taskDetailOpen}
             setTaskDetailOpen={setTaskDetailOpen}
           />
         </Dialog>

@@ -34,7 +34,6 @@ function AddCongViecModal() {
   const handleProjectChange = (e) => {
     setSelectProject(e.target.value);
     setSelectProjectName(e.target.options[e.target.selectedIndex].text);
-  
   };
 
   const { list } = useLists(selectProject);
@@ -44,7 +43,6 @@ function AddCongViecModal() {
   };
   const onTaskSubmit = async (values) => {
     try {
-      
       const taskData = await taskApi.create(
         values,
         selectProject,
@@ -115,25 +113,6 @@ function AddCongViecModal() {
               <div className="grid grid-cols-2 gap-4 mt-6 mb-10">
                 <div>
                   <span className="label-text text-black text-md font-bold">
-                    Chọn nhóm công việc
-                  </span>
-                  <select
-                    id="location"
-                    name="location"
-                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                    onChange={(e) => handleGroupChange(e.target.value)}
-                  >
-                    <option>--Chọn nhóm công việc</option>
-                    {list.map((l) => (
-                      <option key={l.id} value={l.id}>
-                        {l.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <span className="label-text text-black text-md font-bold">
                     Chọn dự án
                   </span>
                   <select
@@ -146,6 +125,24 @@ function AddCongViecModal() {
                     {projectList.map((project, index) => (
                       <option value={`${project.id}`} key={index}>
                         {project.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <span className="label-text text-black text-md font-bold">
+                    Chọn nhóm công việc
+                  </span>
+                  <select
+                    id="location"
+                    name="location"
+                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    onChange={(e) => handleGroupChange(e.target.value)}
+                  >
+                    <option>--Chọn nhóm công việc</option>
+                    {list.map((l) => (
+                      <option key={l.id} value={l.id}>
+                        {l.name}
                       </option>
                     ))}
                   </select>

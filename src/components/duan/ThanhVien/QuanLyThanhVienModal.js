@@ -13,6 +13,11 @@ function QuanLyThanhVienModal() {
   const { project, loading } = useProjectDetail(projectIdFormat);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isYou, setIsYou] = useState(false);
+
+  const handleRemoveUser = () => {
+    
+  }
+
   let adminId = [];
 
   let [addMemOpen, setAddMemOpen] = useState(false);
@@ -82,20 +87,29 @@ function QuanLyThanhVienModal() {
         {project.members.map((member) => {
           if (member.role === "normal") {
             return (
-              <div className="flex flex-row items-center mt-6">
-                <img
-                  src="https://www.indiewire.com/wp-content/uploads/2022/03/Zoe-Saldana.jpg?w=780"
-                  alt=""
-                  className="w-8 h-8 rounded-full mr-2"
-                />
-                <div className="flex flex-col">
-                  <span className="text-base font-semibold">
-                    {member.username}
-                  </span>
-                  <span className="text-gray-500 font-normal text-base">
-                    {member.email}
-                  </span>
+              <div className="flex flex-row items-center justify-between mt-6">
+                <div className="flex flex-row items-center">
+                  <img
+                    src="https://www.indiewire.com/wp-content/uploads/2022/03/Zoe-Saldana.jpg?w=780"
+                    alt=""
+                    className="w-8 h-8 rounded-full mr-2"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-base font-semibold">
+                      {member.username}
+                    </span>
+                    <span className="text-gray-500 font-normal text-base">
+                      {member.email}
+                    </span>
+                  </div>
                 </div>
+                {isAdmin ? (
+                  <div className="remove" onClick={handleRemoveUser}>
+                    <button className="btn btn-error text-white">Remove</button>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             );
           }
