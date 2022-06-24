@@ -18,6 +18,13 @@ export const getTasks = (listId) => async (dispatch) => {
     payload: tasks.data,
   });
 };
+export const getTasksByProjectId = (projectId) => async (dispatch) => {
+  const { tasks } = await taskApi.getTasksByProjectId(projectId);
+  dispatch({
+    type: GET_TASKS,
+    payload: tasks.data,
+  });
+}
 export const getTasksByUserId = (userId) => async (dispatch) => {
   const { tasks } = await taskApi.getAllByUserId(userId);
   dispatch({

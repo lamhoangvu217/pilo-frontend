@@ -12,6 +12,17 @@ const taskApi = {
       tasks: tasks,
     };
   },
+  async getTasksByProjectId(projectId) {
+    const url = `/api/tasks/getByProjectId/${projectId}`;
+    const tasks = await axiosClient.get(url, {
+      headers: {
+        authorization: `${token}`,
+      },
+    });
+    return {
+      tasks: tasks,
+    };
+  },
   async getAllByUserId(userId) {
     const url = `/api/tasks/getAllByUserId/${userId}`;
     const tasks = await axiosClient.get(url, {

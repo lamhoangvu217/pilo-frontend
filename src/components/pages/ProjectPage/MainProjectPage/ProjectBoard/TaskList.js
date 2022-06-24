@@ -5,7 +5,7 @@ import useWindowSize from "../../../../../hooks/useWindowSize";
 import FilterModule from "./FilterModule/FilterModule";
 import TaskItem from "./TaskItem";
 import { useSelector, useDispatch } from "react-redux";
-import { getTasks } from "redux/actions/tasks";
+import { getTasks, getTasksByProjectId } from "redux/actions/tasks";
 import { getLists } from "redux/actions/lists";
 import { useParams } from "react-router-dom";
 import useProjectDetail from "hooks/useProjectDetail";
@@ -14,7 +14,7 @@ function TaskList() {
   const projectId = useParams();
   const projectIdFormat = projectId.id;
   const [width, height] = useWindowSize();
-  const [listId, setListId] = useState("");
+  const [listId, setListId] = useState("-1");
   const [listName, setListName] = useState("");
   const projectListHeight = height - 75;
   function closeAddJobModal() {
@@ -36,8 +36,18 @@ function TaskList() {
     dispatch(getLists(projectIdFormat));
   }, [dispatch]);
   useEffect(() => {
-    dispatch(getTasks(listId));
+    if (listId === "-1") {
+      dispatch(getTasksByProjectId(projectIdFormat))
+    } else {
+      dispatch(getTasks(listId));
+    }
   }, [listId]);
+
+  const getNameById = (id) => {
+     let list = lists.find(x => x.id === id);
+     return list?.name;
+  }
+
   var user = localStorage.getItem("user");
   var userObject = JSON.parse(user);
   var userId = userObject.id;
@@ -106,8 +116,8 @@ function TaskList() {
               <span className="text-black block ml-3">Nhóm công việc</span>
               <div>
                 <select onChange={(e) => handleSelect(e)}>
-                  <option value="0" disabled selected>
-                    --Chọn nhóm công việc--
+                  <option value="-1" selected>
+                    Tất cả
                   </option>
                   {lists.map((l) => (
                     <option value={`${l.id}`}>{l.name}</option>
@@ -168,8 +178,8 @@ function TaskList() {
                 {tasks?.map((task, index) => (
                   <TaskItem
                     task={task}
-                    listId={listId}
-                    listName={listName}
+                    listId={task.listId}
+                    listName={getNameById(task.listId)}
                     index={index}
                   />
                 ))}
