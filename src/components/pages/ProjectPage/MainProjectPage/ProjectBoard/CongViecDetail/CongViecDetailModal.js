@@ -31,7 +31,7 @@ function CongViecDetailModal({
   listId,
   projectId,
   taskDetailOpen,
-  setTaskDetailOpen
+  setTaskDetailOpen,
 }) {
   const task = useSelector((state) => state.task.task);
   const {
@@ -47,50 +47,15 @@ function CongViecDetailModal({
     formState: { isSubmitting: isSubmitting2 },
   } = useForm({
     resolver: yupResolver(schema2),
-    // defaultValues: {
-    //   name: task.name,
-    //   description: task.description,
-    // },
   });
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
-
-  // const [newDescription, setNewDescription] = useState("");
   const members = task.members.map((member) => member.user);
   useEffect(() => {
     dispatch(getTask(taskId));
   }, [dispatch]);
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
-  // const [totalChecked, setTotalChecked] = useState([]);
-  // useEffect(() => {
-  //   setTotalChecked(
-  //     task.checklists.filter((checklist) => checklist.complete === true)
-  //   );
-  // }, []);
-
-  // useEffect(() => {
-  //   if (totalChecked.length === task.checklists.length) {
-  //     const handleChecklistDone = async () => {
-  //       const percent = {
-  //         progress: 100
-  //       }
-  //       const progressData = await taskApi.updateProgress(percent, taskId);
-  //       dispatch(getTask(taskId));
-  //     };
-  //     handleChecklistDone();
-  //   } else {
-  //     const handleChecklistNormal = async () => {
-  //       const percent = {
-  //         progress: 0
-  //       }
-  //       const progressData = await taskApi.updateProgress(percent, taskId);
-  //       dispatch(getTask(taskId));
-
-  //     };
-  //     handleChecklistNormal();
-  //   }
-  // }, [dispatch]);
 
   const { project, loading } = useProjectDetail(projectId);
   const handleAddMember = async (e) => {
@@ -101,6 +66,10 @@ function CongViecDetailModal({
         userId: e.target.name,
       })
     );
+    toast.success("Giao việc thành công!", {
+      duration: 2000,
+      position: "top-right",
+    });
   };
   const handleUpdate = async (values) => {
     try {
@@ -132,27 +101,6 @@ function CongViecDetailModal({
     setTaskDescription(e.target.value);
     setEditMode(true);
   };
-
-  // const onDescriptionSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const descriptionData = await taskApi.editTaskDescription(
-  //       newDescription,
-  //       taskId
-  //     );
-  //     setEditMode(false);
-  //     toast.success("Cập nhật mô tả thành công!", {
-  //       duration: 2000,
-  //       position: "top-right",
-  //     });
-  //   } catch (error) {
-  //     toast.error("Cập nhật mô tả không thành công!", {
-  //       duration: 2000,
-  //       position: "top-right",
-  //     });
-  //   }
-  // };
   const handleProgress = async (value) => {
     try {
       const progressData = await taskApi.updateProgress(value, taskId);
@@ -167,10 +115,6 @@ function CongViecDetailModal({
       console.log(error);
     }
   };
-  // const handleDescription = (e) => {
-  //   setNewDescription(e.target.value);
-  //   setEditMode(true);
-  // };
   let admin;
   if (loading) {
     admin = "";
@@ -336,7 +280,7 @@ function CongViecDetailModal({
                 <input
                   placeholder={task.name}
                   disabled={editTaskStatus}
-                  className="input disabled:bg-gray-300 disabled:border-0 disabled:text-gray-400 bg-white text-black border-gray-300 border-2"
+                  className=" disabled:bg-gray-300 disabled:border-0 disabled:text-black bg-white rounded-md text-black border-gray-300 border-2"
                   name="name"
                   type="text"
                   {...register2("name", {
