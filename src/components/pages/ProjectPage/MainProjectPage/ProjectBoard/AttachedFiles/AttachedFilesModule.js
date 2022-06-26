@@ -16,7 +16,7 @@ function AttachedFilesModule() {
       <div className="flex flex-row mr-6" onClick={openAttachedModal}>
         <PaperClipIcon className="w-5 h-5 text-gray-500 mr-1" />
         <span className="text-gray-600 cursor-pointer  font-medium text-sm">
-          Tài liệu
+          Documents
         </span>
       </div>
       <Transition appear show={attachedOpen} as={Fragment}>

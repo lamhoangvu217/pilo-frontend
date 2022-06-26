@@ -10,10 +10,10 @@ import MainBoxProject from "./MainBoxProject";
 import { Link } from "react-router-dom";
 function Sidebar({ sidebarOpen, classNames, setSidebarOpen }) {
   const navigation = [
-    { name: "Tổng quan", href: "/dashboard", icon: HomeIcon, current: true },
-    { name: "Báo cáo", href: "#", icon: DocumentReportIcon, current: false },
+    { name: "Dashboard", href: "/dashboard", icon: HomeIcon, current: true },
+    { name: "Report", href: "#", icon: DocumentReportIcon, current: false },
     {
-      name: "Việc được giao cho tôi",
+      name: "My tasks",
       href: "/mytasks",
       icon: BriefcaseIcon,
       current: false,

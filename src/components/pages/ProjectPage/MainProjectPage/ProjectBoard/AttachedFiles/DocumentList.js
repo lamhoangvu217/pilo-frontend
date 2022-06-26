@@ -14,7 +14,7 @@ function DocumentList() {
   }, [dispatch]);
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Danh sách tài liệu dự án</h1>
+      <h1 className="text-2xl font-bold mb-4">Document list</h1>
       <hr />
       <div className="flex flex-wrap mt-4">
         {files.map((file) => (

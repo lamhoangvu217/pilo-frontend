@@ -131,7 +131,7 @@ function AddCongViecModal() {
                 </div>
                 <div>
                   <span className="label-text text-black text-md font-bold">
-                    Chọn nhóm công việc
+                    Select list
                   </span>
                   <select
                     id="location"
@@ -139,7 +139,7 @@ function AddCongViecModal() {
                     className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                     onChange={(e) => handleGroupChange(e.target.value)}
                   >
-                    <option>--Chọn nhóm công việc</option>
+                    <option>--Select list--</option>
                     {list.map((l) => (
                       <option key={l.id} value={l.id}>
                         {l.name}
@@ -151,7 +151,7 @@ function AddCongViecModal() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col">
                   <span className="label-text text-black font-semibold block">
-                    Ngày bắt đầu
+                    Start date
                   </span>
                   <input
                     className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
@@ -161,7 +161,7 @@ function AddCongViecModal() {
                 </div>
                 <div className="flex flex-col">
                   <span className="label-text text-black font-semibold block">
-                    Ngày kết thúc
+                    End date
                   </span>
                   <input
                     className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
@@ -176,7 +176,7 @@ function AddCongViecModal() {
               <div className="form-control mt-4">
                 <label className="label">
                   <span className="label-text text-black text-md font-bold">
-                    Mô tả công việc
+                    Description
                   </span>
                 </label>
                 <textarea
@@ -192,7 +192,7 @@ function AddCongViecModal() {
                 type="submit"
                 className="btn btn-primary mt-5 w-full mb-1"
               >
-                Thêm
+                Add new
               </button>
             </form>
           </div>

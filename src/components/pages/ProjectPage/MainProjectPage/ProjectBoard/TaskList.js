@@ -113,11 +113,11 @@ function TaskList() {
           >
             <FilterModule />
             <div className="flex flex-row py-3 w-full bg-white items-center space-x-2">
-              <span className="text-black block ml-3">Nhóm công việc</span>
+              <span className="text-black block ml-3">List</span>
               <div>
                 <select onChange={(e) => handleSelect(e)}>
                   <option value="-1" selected>
-                    Tất cả
+                    All
                   </option>
                   {lists.map((l) => (
                     <option value={`${l.id}`}>{l.name}</option>
@@ -146,31 +146,31 @@ function TaskList() {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Tên công việc
+                    Task name
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Nhóm công việc
+                    List
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Tình trạng công việc
+                    Progress
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Hạn hoàn thành
+                    Deadline
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Người thực hiện
+                    Members
                   </th>
                 </tr>
               </thead>

@@ -22,7 +22,7 @@ const LandingHeader = () => {
                   href="/"
                   className="mr-8 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
                 >
-                  Giới thiệu
+                  About Pilo
                 </a>
               </Link>
               <Link to="/pricing">
@@ -30,7 +30,7 @@ const LandingHeader = () => {
                   href="/"
                   className="mr-8 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
                 >
-                  Biểu phí
+                  Pricing
                 </a>
               </Link>
               <Link to="/login">
@@ -38,7 +38,7 @@ const LandingHeader = () => {
                   href="/"
                   className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
                 >
-                  Đăng nhập
+                  Sign in
                 </a>
               </Link>
               <Link to="/register">
@@ -46,7 +46,7 @@ const LandingHeader = () => {
                   href="/"
                   className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                 >
-                  Đăng ký
+                  Sign up
                 </a>
               </Link>
             </div>

@@ -5,17 +5,16 @@ const LandingProduct = () => {
     <div className="flex py-14 pt-20 bg-white flex-col justify-center">
       <div className="text-center mb-2">
         <span className="block leading-tight font-semibold text-4xl text-[#091e42] mb-3">
-          Đó không chỉ là công việc. Đó là cách làm việc cùng nhau.
+          It's not just work. That's how to work together.
         </span>
         <span className="block text-xl mb-3 text-[#091e42]">
-          Bắt đầu với bảng Trello, danh sách và thẻ. Tùy chỉnh và mở rộng với
-          nhiều tính năng hơn khi tinh <br /> thần làm việc nhóm của bạn phát
-          triển. Quản lý các dự án, sắp xếp nhiệm vụ và xây dựng tinh thần{" "}
-          <br /> làm việc nhóm—tất cả ở cùng một nơi.
+          Get started with Pilo projects, lists and tasks. Customize and expand
+          with more features as your teamwork grows. <br/> Manage projects, organize
+          tasks, and build morale teamwork—all in one place.
         </span>
-        <Link to="/signup">
+        <Link to="/register">
           <button className="bg-indigo-500 text-white px-5 py-2 hover:font-semibold rounded-md hover:bg-white hover:text-indigo-500 hover:border-2 hover:border-indigo-500">
-            Bắt đầu làm việc
+            Start working
           </button>
         </Link>
       </div>

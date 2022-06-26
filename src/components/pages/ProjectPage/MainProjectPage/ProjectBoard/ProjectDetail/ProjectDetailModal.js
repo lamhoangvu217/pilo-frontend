@@ -86,16 +86,16 @@ function ProjectDetailModal({ setViewProjectOpen }) {
     toolBoxForAdmin = (
       <>
         <button className="btn btn-primary " onClick={openPhanquyenModal}>
-          Phân quyền sử dụng
+          Permissions
         </button>
         <button className="btn " onClick={openDuAnModal}>
-          Sửa dự án
+          Edit project
         </button>
         <button
           className="btn btn-error text-white"
           onClick={openDeleteDuAnModal}
         >
-          Xóa dự án
+          Delete project
         </button>
       </>
     );
@@ -148,7 +148,7 @@ function ProjectDetailModal({ setViewProjectOpen }) {
         <div className="inline-block border-2 border-gray-300 w-full h-full max-w-5xl overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-md">
           <div className="px-[30px] py-[25px]">
             <div className="flex flex-row justify-between">
-              <h1 className="text-xl text-black font-bold">Thông tin dự án</h1>
+              <h1 className="text-xl text-black font-bold">Project Detail</h1>
               <img
                 src={`${project.thumbnail}`}
                 className="w-9 h-9 rounded-full"
@@ -169,19 +169,19 @@ function ProjectDetailModal({ setViewProjectOpen }) {
                             scope="col"
                             className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                           >
-                            Tên dự án
+                            Project name
                           </th>
                           <th
                             scope="col"
                             className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                           >
-                            Ngày bắt đầu
+                            Start date
                           </th>
                           <th
                             scope="col"
                             className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                           >
-                            Ngày kết thúc
+                            End date
                           </th>
                           <th
                             scope="col"
@@ -193,7 +193,7 @@ function ProjectDetailModal({ setViewProjectOpen }) {
                             scope="col"
                             className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                           >
-                            Người tạo dự án
+                            Admin
                           </th>
                         </tr>
                       </thead>
@@ -237,7 +237,7 @@ function ProjectDetailModal({ setViewProjectOpen }) {
                       className="btn btn-warning text-white"
                       onClick={openQuanlythanhvienModal}
                     >
-                      Quản lý thành viên
+                      Members
                     </button>
                     {toolBoxForAdmin}
                   </div>
@@ -313,20 +313,20 @@ function ProjectDetailModal({ setViewProjectOpen }) {
               <div className="inline-block w-full h-full max-w-xl overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-md">
                 <div className="px-[30px] py-[25px] flex flex-col">
                   <span className="text-black font-semibold text-center">
-                    Bạn có chắc muốn xóa dự án không?
+                    Are you sure to delete project?
                   </span>
                   <div className="flex flex-row space-x-4 mt-3 justify-center">
                     <button
                       className="btn  bg-green-500 border-0"
                       onClick={() => setDeleteDuAnOpen(false)}
                     >
-                      Không
+                      No
                     </button>
                     <button
                       className="btn border-0 bg-red-500"
                       onClick={onDelete}
                     >
-                      Có
+                      Yes
                     </button>
                   </div>
                 </div>

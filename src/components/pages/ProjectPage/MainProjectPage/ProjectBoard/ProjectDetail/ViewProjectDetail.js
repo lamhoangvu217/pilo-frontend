@@ -18,7 +18,7 @@ function ViewProjectDetail() {
           <InformationCircleIcon className="w-5 h-5 mr-1 text-[#95a5a6]" />
           <span className="text-[#95a5a6] cursor-pointer  font-medium text-sm">
             {" "}
-            Xem thông tin dự án
+            Detail
           </span>
         </div>
       </div>

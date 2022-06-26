@@ -21,10 +21,10 @@ function MyTasks() {
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-black font-semibold">
-              Danh sách công việc cần làm
+              Your to do list
             </h1>
             <p className="mt-2 text-sm text-gray-700">
-              Tất cả công việc cần phải làm sẽ hiển thị ở đây
+              All task you need to do
             </p>
           </div>
           
@@ -40,31 +40,31 @@ function MyTasks() {
                         scope="col"
                         className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                       >
-                        Tên công việc
+                        Task name
                       </th>
                       <th
                         scope="col"
                         className="px-6 py-3 text-left text-sm font-semibold text-gray-900"
                       >
-                        Dự án
+                        Project
                       </th>
                       <th
                         scope="col"
                         className="px-6 py-3 text-left text-sm font-semibold text-gray-900"
                       >
-                        Ngày đến hạn
+                        Duedate
                       </th>
                       <th
                         scope="col"
                         className="px-6 py-3 text-left text-sm font-semibold text-gray-900"
                       >
-                        Tiến độ
+                        Progress
                       </th>
                       <th
                         scope="col"
                         className="px-6 py-3 text-left text-sm font-semibold text-gray-900"
                       >
-                        Người thực hiện
+                        Members
                       </th>
                     </tr>
                   </thead>

@@ -29,7 +29,7 @@ function AddAdminModal() {
     try {
       const memberData = await projectApi.addAdmin(memberId, projectIdHandler);
       dispatch(getProject(projectIdHandler))
-      toast.success("Thêm thành viên thành công!", {
+      toast.success("Add member successfully!", {
         duration: 2000,
         position: "top-right",
         className: "bg-green-500 text-white",
@@ -71,14 +71,14 @@ function AddAdminModal() {
         <div className="inline-block fixed border-2 border-gray-300 w-full h-96 max-w-md overflow-hidden text-left align-middle transition-all transform bg-[#e74c3c] shadow-xl rounded-md">
           <div className="px-[30px] py-[25px]">
             <h1 className="text-xl text-white font-bold">
-              Thêm người quản lý dự án
+              Add new admin
             </h1>
             <hr className="mt-3 mb-3" />
 
             <div className="form-control">
               <label className="label">
                 <span className="label-text text-white text-md">
-                  Tìm kiếm thành viên nội bộ
+                  Search
                 </span>
               </label>
               {/* <input
@@ -94,7 +94,7 @@ function AddAdminModal() {
                 onChange={handleOptionSelect}
               />
               <button className="btn mt-5" onClick={handleAddMember}>
-                Thêm
+                Add new
               </button>
             </div>
           </div>

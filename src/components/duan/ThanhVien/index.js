@@ -26,7 +26,7 @@ function ThanhVien({ members }) {
         <div className="flex items-center justify-between">
           <label className="label">
             <span className="label-text text-black text-md font-bold">
-              Thành viên ({members.length})
+              Member ({members.length})
             </span>
           </label>
           <div>
@@ -35,7 +35,7 @@ function ThanhVien({ members }) {
               onClick={openAddMemModal}
               className="text-[#793EF9] text-sm font-semibold"
             >
-              + Thêm thành viên
+              + Add new member
             </button>
           </div>
         </div>

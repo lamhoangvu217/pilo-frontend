@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getLists } from "redux/actions/lists";
 const schema = yup.object().shape({
-  name: yup.string().required("Vui lòng nhập tên nhóm công việc"),
+  name: yup.string().required("Please type list name"),
 });
 function AddGroupCongViecModal() {
   const projectId = useParams();
@@ -27,7 +27,7 @@ function AddGroupCongViecModal() {
     try {
       const listData = await listApi.create(values, projectIdFormat);
       dispatch(getLists(projectIdFormat));
-      toast.success("Tạo nhóm công việc thành công!", {
+      toast.success("Created list successfully!", {
         duration: 2000,
         position: "top-right",
         className: "bg-green-500 text-white",
@@ -68,18 +68,18 @@ function AddGroupCongViecModal() {
         <div className="inline-block border-2 border-gray-300 w-full h-full max-w-xl overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-md">
           <div className="px-[30px] py-[25px]">
             <h1 className="text-xl text-black font-bold">
-              Thêm mới nhóm công việc
+              Add new list
             </h1>
             <hr className="mt-3 mb-3" />
             <form onSubmit={handleSubmit(onListSubmit)}>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-black text-md font-bold">
-                    Tên nhóm công việc
+                   List name
                   </span>
                 </label>
                 <input
-                  placeholder="nhập tên nhóm công việc"
+                  placeholder="list name"
                   className="input  bg-white text-black border-gray-300 border-2"
                   type="text"
                   {...register("name")}
@@ -93,7 +93,7 @@ function AddGroupCongViecModal() {
                 type="submit"
                 class="btn btn-primary mt-5 w-full mb-1"
               >
-                Thêm
+                Add new list
               </button>
             </form>
           </div>

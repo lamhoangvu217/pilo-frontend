@@ -87,7 +87,7 @@ function PhanQuyenSuDungModal() {
                 <div className="sm:flex sm:items-center">
                   <div className="sm:flex-auto flex flex-row justify-between items-center">
                     <span className="text-black font-semibold text-2xl block">
-                      Phân quyền sử dụng theo loại tài khoản
+                      Permissions
                     </span>
                     <div>
                       <button
@@ -95,7 +95,7 @@ function PhanQuyenSuDungModal() {
                         disabled={updateButton}
                         onClick={handleSubmit}
                       >
-                        Cập nhật
+                        Update
                       </button>
                     </div>
                   </div>
@@ -112,19 +112,19 @@ function PhanQuyenSuDungModal() {
                                 colSpan={3}
                                 className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                               >
-                                Phân quyền
+                                Permissions
                               </th>
                               <th
                                 scope="col"
                                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                               >
-                                Quản lý
+                                Admin
                               </th>
                               <th
                                 scope="col"
                                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                               >
-                                Thành viên
+                                Member
                               </th>
                             </tr>
                           </thead>
@@ -137,10 +137,10 @@ function PhanQuyenSuDungModal() {
                               >
                                 <div className="flex flex-col">
                                   <span className="text-base font-medium">
-                                    Tạo công việc mới
+                                    Add new task
                                   </span>
                                   <span className="text-xs font-normal text-gray-500">
-                                    Quyền tạo công việc mới
+                                    Add new task permission
                                   </span>
                                 </div>
                               </td>
@@ -168,10 +168,10 @@ function PhanQuyenSuDungModal() {
                               >
                                 <div className="flex flex-col">
                                   <span className="text-base font-medium">
-                                    Tạo nhóm công việc mới
+                                    Add new list
                                   </span>
                                   <span className="text-xs font-normal text-gray-500">
-                                    Quyền tạo nhóm công việc mới
+                                    Users can add new list
                                   </span>
                                 </div>
                               </td>
@@ -197,10 +197,10 @@ function PhanQuyenSuDungModal() {
                               >
                                 <div className="flex flex-col">
                                   <span className="text-base font-medium">
-                                    Giao công việc cho người khác
+                                    Assign task
                                   </span>
                                   <span className="text-xs font-normal text-gray-500">
-                                    Quyền giao công việc cho người khác
+                                    Assign task for users
                                   </span>
                                 </div>
                               </td>
@@ -226,10 +226,10 @@ function PhanQuyenSuDungModal() {
                               >
                                 <div className="flex flex-col">
                                   <span className="text-base font-medium">
-                                    Xóa công việc
+                                    Delete task
                                   </span>
                                   <span className="text-xs font-normal text-gray-500">
-                                    Quyền xóa công việc
+                                    Delete task role
                                   </span>
                                 </div>
                               </td>
@@ -255,10 +255,10 @@ function PhanQuyenSuDungModal() {
                               >
                                 <div className="flex flex-col">
                                   <span className="text-base font-medium">
-                                    Chỉnh sửa công việc
+                                    Edit task
                                   </span>
                                   <span className="text-xs font-normal text-gray-500">
-                                    Quyền chỉnh sửa tên và mô tả công việc
+                                    Edit task role
                                   </span>
                                 </div>
                               </td>

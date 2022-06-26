@@ -85,7 +85,7 @@ const Login = () => {
               />
             </Link>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-              Đăng nhập vào Pilo
+              Log in to Pilo
             </h2>
           </div>
           <form
@@ -131,13 +131,13 @@ const Login = () => {
                   htmlFor="remember-me"
                   className="ml-2 block text-sm text-gray-900"
                 >
-                  Ghi nhớ tôi
+                  Remember me
                 </label>
               </div>
               <div className="text-sm">
                 <Link to="/verifyEmail">
                   <span className="font-medium text-indigo-600 hover:text-indigo-500">
-                    Bạn quên mật khẩu
+                    Forgot password?
                   </span>
                 </Link>
               </div>
@@ -165,12 +165,12 @@ const Login = () => {
               disabled={isSubmitting}
               className="group disabled:opacity-75 disabled:bg-gray-400 relative w-full flex justify-center py-4 px-4 border border-transparent text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Đăng nhập
+              Sign in
             </button>
             <div className="text-center">
-              <span className="text-black">Bạn chưa có tài khoản?</span>
+              <span className="text-black">You don't have account?</span>
               <Link to="/register" className="text-red-500 ml-1 font-semibold">
-                Đăng ký
+                Sign up
               </Link>
             </div>
           </form>

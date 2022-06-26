@@ -149,7 +149,7 @@ function QuanLyThanhVienModal() {
           <div className="px-[30px] py-8">
             <div className="quanlyduan mb-4">
               <span className="text-black font-semibold text-2xl block">
-                Quản lý dự án
+                Admins
               </span>
 
               {admin}
@@ -161,7 +161,7 @@ function QuanLyThanhVienModal() {
                   <PlusCircleIcon className="w-9 h-9 text-green-500" />
                   <div className="flex flex-col">
                     <span className="text-sm font-normal ml-2 block text-green-500">
-                      Thêm Quản lý dự án
+                      Add new admin
                     </span>
                   </div>
                 </div>
@@ -173,12 +173,12 @@ function QuanLyThanhVienModal() {
             <div className="mt-4">
               <div className="flex flex-row justify-between">
                 <span className="text-black font-semibold text-2xl">
-                  Thành viên
+                  Members
                 </span>
                 {isAdmin ? (
                   <div className="" onClick={openAddMemModal}>
                     <button className="text-purple-500 font-medium text-sm">
-                      + Thêm thành viên
+                      + Add new member
                     </button>
                   </div>
                 ) : (

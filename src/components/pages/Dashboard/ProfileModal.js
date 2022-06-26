@@ -77,7 +77,7 @@ function ProfileModal() {
                   <div className="flex flex-row">
                     <KeyIcon className="w-5 h-5 text-gray-500" />
                     <span className="text-black ml-2 text-sm">
-                      Đổi mật khẩu
+                     Change password
                     </span>
                   </div>
                 </Link>
@@ -86,7 +86,7 @@ function ProfileModal() {
               <div className="flex flex-row items-center py-3 px-3 hover:bg-gray-200 hover:rounded-md w-full">
                 <UserCircleIcon className="w-5 h-5 text-gray-500" />
                 <span className="text-black ml-2 text-sm">
-                  Cài đặt tài khoản
+                  Account settings
                 </span>
               </div>
             </div>
@@ -97,7 +97,7 @@ function ProfileModal() {
                   className="text-black ml-2 text-sm"
                   onClick={handleLogoutClick}
                 >
-                  Đăng xuất
+                  Log out
                 </span>
               </div>
             </div>

@@ -72,16 +72,16 @@ function AddDuAnModal() {
         <div className="inline-block w-full h-full max-w-xl overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-md">
           <div className="px-[30px] py-[25px]">
             <form onSubmit={handleSubmit(onProjectSubmit)}>
-              <h1 className="text-xl text-black font-bold">Thêm mới dự án</h1>
+              <h1 className="text-xl text-black font-bold">Add new project</h1>
               <hr className="mt-3 mb-3" />
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-black text-md font-bold">
-                    Tên dự án
+                    Project name
                   </span>
                 </label>
                 <input
-                  placeholder="nhập tên dự án"
+                  placeholder="project name"
                   className="input  bg-white text-black border-gray-300 border-2"
                   type="text"
                   {...register("name")}
@@ -90,7 +90,7 @@ function AddDuAnModal() {
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div className="flex flex-col">
                   <span className="label-text text-black font-semibold block">
-                    Ngày bắt đầu
+                    Start date
                   </span>
                   <input
                     className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
@@ -100,7 +100,7 @@ function AddDuAnModal() {
                 </div>
                 <div className="flex flex-col">
                   <span className="label-text text-black font-semibold block">
-                    Ngày kết thúc
+                    End date
                   </span>
                   <input
                     className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
@@ -112,12 +112,12 @@ function AddDuAnModal() {
               <div className="form-control mt-4">
                 <label className="label">
                   <span className="label-text text-black text-md font-bold">
-                    Mô tả
+                    Description
                   </span>
                 </label>
                 <textarea
                   className="textarea h-24  bg-white text-black border-gray-300 border-2"
-                  placeholder="nhập thông tin bổ sung"
+                  placeholder="description"
                   defaultValue={""}
                   {...register("description")}
                 />
@@ -129,7 +129,7 @@ function AddDuAnModal() {
                   </span>
                 </label>
                 <input
-                  placeholder="nhập link thumbnail"
+                  placeholder="thumbnail url"
                   className="input  bg-white text-black border-gray-300 border-2"
                   type="text"
                   {...register("thumbnail")}
@@ -144,7 +144,7 @@ function AddDuAnModal() {
                 type="submit"
                 className="btn btn-primary mt-5 w-full mb-1"
               >
-                Thêm
+                Add new
               </button>
             </form>
           </div>

@@ -24,7 +24,7 @@ function AddModule() {
   return (
     <div>
       <div className="mr-2">
-        <button className="bg-purple-600 px-6 py-2 text-white rounded-full" onClick={openDuAnModal}> Thêm dự án</button>
+        <button className="bg-purple-600 px-6 py-2 text-white rounded-full" onClick={openDuAnModal}> New project</button>
       </div>
       {/* <Transition appear show={addJobOpen} as={Fragment}>
         <Dialog

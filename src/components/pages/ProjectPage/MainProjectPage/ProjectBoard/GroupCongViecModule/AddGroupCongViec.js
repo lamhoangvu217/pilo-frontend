@@ -36,7 +36,7 @@ function AddGroupCongViec() {
         onClick={openAddGroupModal}
         className="text-violet-500 px-5 cursor-pointer  font-medium text-sm py-3"
       >
-        + Thêm nhóm công việc
+        + Add new list
       </div>
     );
   } else if (identify === "member") {
@@ -46,7 +46,7 @@ function AddGroupCongViec() {
           onClick={openAddGroupModal}
           className="text-violet-500 px-5 cursor-pointer  font-medium text-sm py-3"
         >
-          + Thêm nhóm công việc
+          + Add new list
         </div>
       );
     } else {

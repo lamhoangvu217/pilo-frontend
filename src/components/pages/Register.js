@@ -75,7 +75,7 @@ const Register = () => {
               />
             </Link>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-              Đăng ký tài khoản mới
+              Sign up
             </h2>
           </div>
           <form
@@ -90,7 +90,7 @@ const Register = () => {
                 </label>
                 <input
                   className="appearance-none rounded-none relative block w-full px-4 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-xl"
-                  placeholder="Tên của bạn"
+                  placeholder="Your name"
                   {...register("username")}
                   type="text"
                 />
@@ -104,7 +104,7 @@ const Register = () => {
                   {...register("email")}
                   type="email"
                   className="appearance-none rounded-none relative block w-full px-4 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-xl"
-                  placeholder="Địa chỉ email"
+                  placeholder="Email address"
                 />
               </div>
               <div>
@@ -116,7 +116,7 @@ const Register = () => {
                   autoComplete="current-password"
                   {...register("password")}
                   className="appearance-none  rounded-none relative block w-full px-4 py-4 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-xl"
-                  placeholder="Mật khẩu"
+                  placeholder="Password"
                 />
               </div>
               <div>
@@ -127,7 +127,7 @@ const Register = () => {
                   type="text"
                   {...register("position")}
                   className="appearance-none  rounded-b-md relative block w-full px-4 py-4 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-xl"
-                  placeholder="Chức vụ tại công ty"
+                  placeholder="Your position in company"
                 />
               </div>
               {/* <div>
@@ -166,18 +166,18 @@ const Register = () => {
               disabled={isSubmitting}
               className="group disabled:opacity-75 disabled:bg-gray-400 relative w-full flex justify-center py-4 px-4 border border-transparent text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Đăng ký
+              Sign up
             </button>
             <div className="text-center">
-              <span className="text-black">Bạn đã có tài khoản?</span>
+              <span className="text-black">You have account already?</span>
               <Link to="/login" className="text-red-500 ml-1 font-semibold">
-                Đăng nhập
+                Sign in
               </Link>
             </div>
           </form>
           <div className="flex flex-col justify-center items-center">
             <span className="block mb-2 font-medium text-gray-500">
-              hoặc đăng ký bằng
+              or sign up with
             </span>
             <img
               className="w-[30px]"

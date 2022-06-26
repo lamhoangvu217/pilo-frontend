@@ -82,12 +82,12 @@ function EditDuAnModal({ project }) {
         <div className="inline-block w-full h-full max-w-xl overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-md">
           <div className="px-[30px] py-[25px]">
             <form onSubmit={handleSubmit(onProjectSubmit)}>
-              <h1 className="text-xl text-black font-bold">Sửa dự án</h1>
+              <h1 className="text-xl text-black font-bold">Edit project</h1>
               <hr className="mt-3 mb-3" />
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-black text-md font-bold">
-                    Tên dự án
+                    Project name
                   </span>
                 </label>
                 <input
@@ -102,7 +102,7 @@ function EditDuAnModal({ project }) {
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div className="flex flex-col">
                   <span className="label-text text-black font-semibold block">
-                    Ngày bắt đầu
+                    Start date
                   </span>
                   <input
                     className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
@@ -113,7 +113,7 @@ function EditDuAnModal({ project }) {
                 </div>  
                 <div className="flex flex-col">
                   <span className="label-text text-black font-semibold block">
-                    Ngày kết thúc
+                    End date
                   </span>
                   <input
                     className=" bg-[#2ecc71] font-medium mt-2  text-white rounded-lg focus:border-0 border-0"
@@ -126,7 +126,7 @@ function EditDuAnModal({ project }) {
               <div className="form-control mt-4">
                 <label className="label">
                   <span className="label-text text-black text-md font-bold">
-                    Mô tả
+                    Description
                   </span>
                 </label>
                 <textarea
@@ -164,7 +164,7 @@ function EditDuAnModal({ project }) {
                 type="submit"
                 className="btn btn-primary mt-5 w-full mb-1"
               >
-                Sửa
+                Edit
               </button>
             </form>
           </div>

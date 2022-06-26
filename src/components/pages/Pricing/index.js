@@ -7,8 +7,8 @@ const tiers = [
   {
     name: "Startup",
     href: "#",
-    priceMonthly: "800.000",
-    description: "Quy mô 1-10 người",
+    priceMonthly: "50",
+    description: "1-10 members",
     includedFeatures: [
       "Potenti felis, in cras at at ligula nunc. ",
       "Orci neque eget pellentesque.",
@@ -17,25 +17,10 @@ const tiers = [
     ],
   },
   {
-    name: "Doanh nghiệp nhỏ",
+    name: "Small Business",
     href: "#",
-    priceMonthly: "2.000.000",
-    description: "Quy mô 10-50 người",
-    includedFeatures: [
-      "Potenti felis, in cras at at ligula nunc. ",
-      "Orci neque eget pellentesque.",
-      "Donec mauris sit in eu tincidunt etiam.",
-      "Faucibus volutpat magna.",
-      "Id sed tellus in varius quisque.",
-      "Risus egestas faucibus.",
-      "Risus cursus ullamcorper.",
-    ],
-  },
-  {
-    name: "Doanh nghiệp vừa",
-    href: "#",
-    priceMonthly: "4.500.000",
-    description: "Quy mô 50-100 người",
+    priceMonthly: "189",
+    description: "10-50 members",
     includedFeatures: [
       "Potenti felis, in cras at at ligula nunc. ",
       "Orci neque eget pellentesque.",
@@ -47,10 +32,25 @@ const tiers = [
     ],
   },
   {
-    name: "Doanh nghiệp lớn",
+    name: "Medium Enterprises",
     href: "#",
-    priceMonthly: "9.900.000",
-    description: "Quy mô >100 người",
+    priceMonthly: "229",
+    description: "50-100 members",
+    includedFeatures: [
+      "Potenti felis, in cras at at ligula nunc. ",
+      "Orci neque eget pellentesque.",
+      "Donec mauris sit in eu tincidunt etiam.",
+      "Faucibus volutpat magna.",
+      "Id sed tellus in varius quisque.",
+      "Risus egestas faucibus.",
+      "Risus cursus ullamcorper.",
+    ],
+  },
+  {
+    name: "Big Enterprises",
+    href: "#",
+    priceMonthly: "550",
+    description: ">100 members",
     includedFeatures: [
       "Potenti felis, in cras at at ligula nunc. ",
       "Orci neque eget pellentesque.",
@@ -70,7 +70,7 @@ function Pricing() {
         <Link to="/">
           <div className="mb-2 flex flex-row items-center fixed left-2 top-2">
             <ArrowLeftIcon className="w-3 h-3 mr-1" />
-            <span className="text-sm">Trở về trang chủ</span>
+            <span className="text-sm">Back to home</span>
           </div>
         </Link>
       </div>
@@ -78,11 +78,11 @@ function Pricing() {
       <div className="max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:flex-col sm:align-center">
           <h1 className="text-5xl font-extrabold text-gray-900 sm:text-center">
-            Biểu phí
+            Pricing
           </h1>
           <p className="mt-5 text-xl text-gray-500 sm:text-center">
-            Bắt đầu quản lý và tối ưu công việc cho doanh nghiệp của bạn ngay
-            bây giờ với các gói ưu đãi
+            Start managing and optimizing work for your business right now with
+            special offers
           </p>
         </div>
         <div className="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-4">
@@ -98,17 +98,17 @@ function Pricing() {
                 <p className="mt-4 text-sm text-gray-500">{tier.description}</p>
                 <p className="mt-8">
                   <span className="text-xl font-extrabold text-gray-900">
-                    {tier.priceMonthly} VND
+                    {tier.priceMonthly} $
                   </span>{" "}
                   <span className="text-base font-medium text-gray-500">
-                    /tháng
+                    /month
                   </span>
                 </p>
                 <a
                   href={tier.href}
                   className="mt-8 block w-full bg-purple-500  rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-purple-700"
                 >
-                  Đăng ký
+                  Choose
                 </a>
               </div>
               <div className="pt-6 pb-8 px-6">
